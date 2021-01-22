@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "91067f63-4797-4248-84a5-8d0d63ed38f0",
+		"name": "projet-concert",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Salle",
+			"item": [
+				{
+					"name": "Create Salle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"rue truc\",\n\t\"city\": \"aix\",\n\t\"phoneNumber\": \"0548789851\",\n\t\"name\": \"la salle\",\n\t\"capacity\": 200\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/salle/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"salle",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Salle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Concert",
+			"item": [
+				{
+					"name": "Create Concert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\": \"1985-04-12T23:20:50.52Z\",\n\t\"time\": \"1985-04-12T23:20:50.52Z\",\n\t\"openingTime\": \"1985-04-12T23:20:50.52Z\",\n\t\"priceMax\": 300,\n\t\"percentage\": 5,\n\t\"categoryNumber\": 3,\n\t\"artistDescription\": \"blabla\",\n\t\"eventId\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/concert/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"concert",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Concert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/concert/7",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"concert",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"artistName\": \"truc\",\n\t\"name\": \"Mon event\",\n\t\"imageThumbnail\": \"\",\n\t\"imagePoster\": \"\",\n\t\"restaurant\": false,\n\t\"parking\": false,\n\t\"songLink\": \"\",\n\t\"artistDescription\": \"blabla\",\n\t\"salleId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/event/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"event",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "Paiement / Create Ticket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": 1,\n\t\"obtainingMethodId\": 1,\n\t\"seatId\": [1,2],\n\t\"price\": 100,\n\t\"cancellationInsurance\": false,\n\t\"qrCodeUrl\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/ticket",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"ticket"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
