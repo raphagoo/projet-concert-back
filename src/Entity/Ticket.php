@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=TicketRepository::class)
@@ -40,28 +41,33 @@ class Ticket
     /**
      * @ORM\ManyToOne(targetEntity=TicketObtaining::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $obtainingMethod;
 
     /**
      * @ORM\OneToOne(targetEntity=ParkingTicket::class, mappedBy="ticket", cascade={"persist", "remove"})
+     * @MaxDepth(2)
      */
     private $parkingTicket;
 
     /**
      * @ORM\OneToOne(targetEntity=RestaurantTicket::class, mappedBy="ticket", cascade={"persist", "remove"})
+     * @MaxDepth(2)
      */
     private $restaurantTicket;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(2)
      */
     private $reservation;
 
     /**
      * @ORM\ManyToOne(targetEntity=Seat::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $seat;
 

@@ -5,6 +5,7 @@ namespace App\BL;
 
 
 use App\Entity\Ticket;
+use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class TicketManager
@@ -39,13 +40,13 @@ class TicketManager
 
     /**
      * @param Ticket $ticket
-     * @return int|null
+     * @return Ticket
      */
     public function save(Ticket $ticket){
 
         $this->em->persist($ticket);
         $this->em->flush();
-        return $ticket->getId();
+        return $ticket;
     }
 
     /**
@@ -56,4 +57,5 @@ class TicketManager
         $this->em->remove($ticket);
         $this->em->flush();
     }
+
 }

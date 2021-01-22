@@ -39,13 +39,13 @@ class ConcertManager
 
     /**
      * @param Concert $concert
-     * @return int|null
+     * @return Concert
      */
     public function save(Concert $concert){
 
         $this->em->persist($concert);
         $this->em->flush();
-        return $concert->getId();
+        return $concert;
     }
 
     /**

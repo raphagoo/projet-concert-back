@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ConcertRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,17 +20,17 @@ class Concert
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string")
      */
     private $time;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string")
      */
     private $openingTime;
 
@@ -52,41 +54,57 @@ class Concert
      */
     private $artistDescription;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Seat::class, mappedBy="concert", orphanRemoval=true)
+     */
+    private $seats;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="concerts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $event;
+
+    public function __construct()
+    {
+        $this->seats = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(string $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    public function getTime(): ?string
     {
         return $this->time;
     }
 
-    public function setTime(\DateTimeInterface $time): self
+    public function setTime(string $time): self
     {
         $this->time = $time;
 
         return $this;
     }
 
-    public function getOpeningTime(): ?\DateTimeInterface
+    public function getOpeningTime(): ?string
     {
         return $this->openingTime;
     }
 
-    public function setOpeningTime(\DateTimeInterface $openingTime): self
+    public function setOpeningTime(string $openingTime): self
     {
         $this->openingTime = $openingTime;
 
@@ -140,4 +158,47 @@ class Concert
 
         return $this;
     }
+
+    /**
+     * @return Collection|Seat[]
+     */
+    public function getSeats(): Collection
+    {
+        return $this->seats;
+    }
+
+    public function addSeat(Seat $seat): self
+    {
+        if (!$this->seats->contains($seat)) {
+            $this->seats[] = $seat;
+            $seat->setConcert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeat(Seat $seat): self
+    {
+        if ($this->seats->removeElement($seat)) {
+            // set the owning side to null (unless already changed)
+            if ($seat->getConcert() === $this) {
+                $seat->setConcert(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
 }

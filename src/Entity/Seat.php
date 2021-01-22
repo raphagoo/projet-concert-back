@@ -35,15 +35,20 @@ class Seat
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="seats")
+     * @ORM\ManyToOne(targetEntity=Concert::class, inversedBy="seats")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $salle;
+    private $concert;
 
     /**
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="seat")
      */
     private $tickets;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $price;
 
     public function __construct()
     {
@@ -91,14 +96,14 @@ class Seat
         return $this;
     }
 
-    public function getSalle(): ?Salle
+    public function getConcert(): ?Concert
     {
-        return $this->salle;
+        return $this->concert;
     }
 
-    public function setSalle(?Salle $salle): self
+    public function setConcert(?Concert $concert): self
     {
-        $this->salle = $salle;
+        $this->concert = $concert;
 
         return $this;
     }
@@ -132,4 +137,17 @@ class Seat
 
         return $this;
     }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

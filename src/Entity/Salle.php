@@ -6,6 +6,7 @@ use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SalleRepository::class)
@@ -16,6 +17,7 @@ class Salle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("event_details")
      */
     private $id;
 
@@ -59,15 +61,9 @@ class Salle
      */
     private $restaurant;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Seat::class, mappedBy="salle", orphanRemoval=true)
-     */
-    private $seats;
-
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->seats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,36 +201,6 @@ class Salle
         }
 
         $this->restaurant = $restaurant;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Seat[]
-     */
-    public function getSeats(): Collection
-    {
-        return $this->seats;
-    }
-
-    public function addSeat(Seat $seat): self
-    {
-        if (!$this->seats->contains($seat)) {
-            $this->seats[] = $seat;
-            $seat->setSalle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeat(Seat $seat): self
-    {
-        if ($this->seats->removeElement($seat)) {
-            // set the owning side to null (unless already changed)
-            if ($seat->getSalle() === $this) {
-                $seat->setSalle(null);
-            }
-        }
 
         return $this;
     }
