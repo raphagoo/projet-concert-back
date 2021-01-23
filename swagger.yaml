@@ -1,0 +1,530 @@
+swagger: "2.0"
+info:
+  description: "Ouais, faudrait que je rajoute une description plus tard"
+  version: "1.0.0"
+  title: "Swagger Projet Concert"
+host: "127.0.0.1:8000"
+basePath: "/v1"
+tags:
+  - name: "common"
+    description: "Toutes les petites routes utilisées notamment pour les listes déroulantes"
+  - name: "concert"
+    description: "CRUD des concerts et événements"
+  - name: "user"
+    description: "Tout ce qui concerne l'utilisateur. De la création de son compte à l'édition de ses données personnelles."
+schemes:
+  - "http"
+paths:
+  /music-categories:
+    get:
+      tags:
+        - "common"
+      summary: "Liste tous les genres de musique de la bdd"
+      operationId: "listMusicCategories"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Category"
+  /salles:
+    get:
+      tags:
+        - "common"
+      summary: "Liste toutes les salles"
+      operationId: "listSalles"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/LightSalle"
+  /ticket-types:
+    get:
+      tags:
+        - "common"
+      summary: "Liste toutes les méthodes d'obtention de ticket"
+      operationId: "listTicketTypes"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TicketType"
+  /search:
+    get:
+      tags:
+        - "common"
+      summary: "Cherche des concerts ou des articles correspondant à la recherche"
+      operationId: "search"
+      parameters:
+        - in: "query"
+          name: "searchValue"
+          description: "texte recherché"
+          type: "string"
+          required: true
+      responses:
+        "200":
+          description: "sucessful operation"
+          schema:
+            $ref: "#/definitions/SearchResult"
+
+  /events:
+    get:
+      tags:
+        - "concert"
+      summary: "Liste des événements"
+      description: "Liste les événemts en fonction de filtres (s'il y en a)\n\nPar défaut, les événements sont triés du plus récent au plus ancien\n\nPeut vous intéresser : pour lister les prochain événements du plus récent au plus éloigné dans le futur (ref page 3), mettez les filtres minDate à la date du jour et sortDate à asc"
+      operationId: "listEvents"
+      parameters:
+        - in: "query"
+          name: "salle"
+          description: "ID de la ou des salles par lesquelles l'utilisateur souhaite filtrer"
+          required: false
+          type: "array"
+          items:
+            type: "integer"
+          collectionFormat: "multi"
+        - in: "query"
+          name: "category"
+          description: "ID de la ou des catégories de musique par lesquelles l'utilisateur souhaite filtrer"
+          required: false
+          type: "array"
+          items:
+            type: "integer"
+          collectionFormat: "multi"
+        - in: "query"
+          name: "dateMin"
+          description: "date minimum par laquelle filtrer"
+          required: false
+          type: "string"
+          format: "date"
+        - in: "query"
+          name: "dateMax"
+          description: "date maximum par laquelle filtrer. Ne peut pas être plus petit que dateMin"
+          required: false
+          type: "string"
+          format: "date"
+        - in: "query"
+          name: "sortDate"
+          description: "Détermine si les résultats doivent être filtrés par date croissante ou décroissante"
+          required: false
+          type: "string"
+          enum:
+            - "asc"
+            - "desc"
+      responses:
+        "200":
+          description: "Liste des événements"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+  /concerts/{concertId}:
+    get:
+      tags:
+        - "concert"
+      summary: "Détails d'un concert"
+      description: "Donne tous les détails concernant un concert. Y compris la liste des sièges"
+      operationId: "detailConcert"
+      parameters:
+        - in: "path"
+          name: "concertId"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "Détail du concert"
+          schema:
+            $ref: "#/definitions/Concert"
+
+  /reservation:
+    post:
+      tags:
+        - "concert"
+      summary: "créé une réservation à un concert"
+      description: "Créé une réservation et les tickets correspondants. La réservation est liée à l'utilisateur connecté.\nATTENTION : pour coller au MVP et au projet initial, les champs parkingTickets et restaurantTickets peuvent être nuls, voire ne pas exister.\nLes tickets de restaurant et les tickets de parking, s'ils existent, sont reliés au premier billet d'un concert. Par exemple, si l'utilisateur réserve 4 places pour 2 concerts (rappel: le MVP permet uniquement la réservation pour 1 concert), il aura donc 8 tickets. S'il réserve au restaurant pour le premier concert, le ticket du restaurant sera lié au premier billet, pas aux autres, même s'ils sont liés au même concert et à la même réservation."
+      operationId: "createReservation"
+      parameters:
+        - in: "body"
+          name: "user"
+          schema:
+            type: "object"
+            properties:
+              tickets:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    concert:
+                      type: "integer"
+                      format: "int64"
+                    seat:
+                      type: "integer"
+                      format: "int64"
+                    price:
+                      type: "number"
+                    cancellationInsurance:
+                      type: "boolean"
+                    ticketType:
+                      type: "integer"
+                      format: "int64"
+                      description: "référence à une des méthodes d'obtention de ticket"
+                    parkingTicket:
+                      type: "object"
+                      properties:
+                        numberPlaces:
+                          type: "integer"
+                        modificationDate:
+                          type: "string"
+                          format: "datetime"
+                          default: null
+                    parkingRestaurant:
+                      type: "object"
+                      properties:
+                        numberPlaces:
+                          type: "integer"
+                        timeReservation:
+                          type: "string"
+                          format: "datetime"
+                        modificationDate:
+                          type: "string"
+                          format: "datetime"
+                          default: null
+      responses:
+        "201":
+          description: "Réservation créée"
+            # schema:
+
+
+
+  /user:
+    post:
+      tags:
+        - "user"
+      summary: "Création d'un nouvel utilisateur"
+      operationId: "createUser"
+      parameters:
+        - in: "body"
+          name: "user"
+          schema:
+            type: "object"
+            required:
+              - "mail"
+              - "password"
+              - "gender"
+              - "firstName"
+              - "lastName"
+              - "address"
+              - "zipCode"
+              - "city"
+              - "country"
+              - "phoneNumber"
+              - "birthdate"
+            properties:
+              mail:
+                type: "string"
+              password:
+                type: "string"
+              gender:
+                type: "string"
+                pattern: "^(M|F)$"
+                default: "M"
+              lastName:
+                type: "string"
+              firstName:
+                type: "string"
+              address:
+                type: "string"
+              residence:
+                type: "string"
+              locality:
+                type: "string"
+              zipCode:
+                type: "string"
+              city:
+                type: "string"
+              country:
+                type: "string"
+              phoneNumber:
+                type: "string"
+              birthdate:
+                type: "string"
+                format: "date"
+      responses:
+        "201":
+          description: "Utilisateur créé"
+          schema:
+            $ref: "#/definitions/User"
+
+    get:
+      tags:
+        - "user"
+      summary: "Information de l'utilisateur"
+      description: "Affiche les information de l'utilisateur connecté"
+      operationId: "getUser"
+      responses:
+        "200":
+          description: "opération réussie"
+          schema:
+            $ref: "#/definitions/User"
+
+    patch:
+      tags:
+        - "user"
+      summary: "Création d'un nouvel utilisateur"
+      operationId: "updateUser"
+      parameters:
+        - in: "body"
+          name: "user"
+          schema:
+            type: "object"
+            properties:
+              mail:
+                type: "string"
+              oldPassword:
+                type: "string"
+              newPassword:
+                type: "string"
+              gender:
+                type: "string"
+                pattern: "^(M|F)$"
+                default: "M"
+              lastName:
+                type: "string"
+              firstName:
+                type: "string"
+              address:
+                type: "string"
+              residence:
+                type: "string"
+              locality:
+                type: "string"
+              zipCode:
+                type: "string"
+              city:
+                type: "string"
+              country:
+                type: "string"
+              phoneNumber:
+                type: "string"
+              birthdate:
+                type: "string"
+                format: "date"
+      responses:
+        "200":
+          description: "Utilisateur mis à jour"
+          schema:
+            $ref: "#/definitions/User"
+
+definitions:
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+
+  LightSalle:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      city:
+        type: "string"
+
+  TicketType:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      price:
+        type: "number"
+      description:
+        type: "string"
+
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      is_admin:
+        type: "boolean"
+        default: false
+      mail:
+        type: "string"
+      gender:
+        type: "string"
+        pattern: "^(M|F)$"
+        default: "M"
+      lastName:
+        type: "string"
+      firstName:
+        type: "string"
+      address:
+        type: "string"
+      residence:
+        type: "string"
+      locality:
+        type: "string"
+      zipCode:
+        type: "string"
+      city:
+        type: "string"
+      country:
+        type: "string"
+      phoneNumber:
+        type: "string"
+      birthdate:
+        type: "string"
+        format: "date"
+
+  Event:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      imageThumbnail:
+        type: "string"
+      imagePoster:
+        type: "string"
+      songLink:
+        type: "string"
+      artistName:
+        type: "string"
+      artistDescription:
+        type: "string"
+      salle:
+        $ref: "#/definitions/LightSalle"
+      firstConcertDate:
+        type: "string"
+        description: "Date du premier concert (format DD/MM/YYYY)"
+        format: "date"
+      firstConcertTime:
+        type: "string"
+        description: "Première heure du premier concert (format HH:mm)"
+        default: "15:30"
+      lastConcertDate:
+        type: "string"
+        description: "Date du dernier concert s'il y a plusieurs concerts à différentes dates pour un seul et même événement. S'il n'y a qu'un concert ou que tous les concerts d'un événement ont lieu le même jour, ce champ est null"
+        format: "date"
+      priceMin:
+        type: "number"
+        description: "Prix de la place la moins chère de tous les concerts de l'événement"
+      priceMax:
+        type: "number"
+        description: "Prix de la place la plus chère de tous les concerts de l'événement"
+      categories:
+        type: "array"
+        items:
+          $ref: "#/definitions/Category"
+      concerts:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int64"
+        description: "Liste des id des concerts associés"
+
+  Concert:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      event:
+        type: "integer"
+        format: "int64"
+        description: "Id de l'événement associé"
+      date:
+        type: "string"
+        description: "Date du concert (format DD/MM/YYYY)"
+        format: "date"
+      time:
+        type: "string"
+        description: "Heure du concert (format HH:mm)"
+        default: "15:30"
+      openinTime:
+        type: "string"
+        description: "Heure d'ouverture du concert (format HH:mm)"
+        default: "14:30"
+      priceMax:
+        type: "number"
+        description: "Prix maximum (places du premier rang)"
+      percentage:
+        type: "number"
+        description: "Taux de diminution du prix"
+      categories:
+        type: "integer"
+        minimum: 1
+        maximum: 3
+        description: "Nombre de catégories de place (entre 1 et 3)"
+      salle:
+        type: "object"
+        properties:
+          nbLines:
+            type: "integer"
+            description: "Nombre de lignes de la salle"
+          nbColumns:
+            type: "integer"
+            description: "Nombre de colonnes de la salle"
+          places:
+            type: "array"
+            items:
+              $ref: "#/definitions/Place"
+
+  Place:
+    type: "object"
+    properties:
+      number:
+        type: "integer"
+        format: "int64"
+      letter:
+        type: "string"
+      price:
+        type: "number"
+      category:
+        type: "integer"
+        minimum: 1
+        maximum: 3
+      available:
+        type: "boolean"
+
+  Article:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      text:
+        type: "string"
+
+  SearchResult:
+    type: "object"
+    properties:
+      events:
+        type: "array"
+        items:
+          $ref: "#/definitions/Event"
+      articles:
+        type: "array"
+        items:
+          $ref: "#/definitions/Article"
+
