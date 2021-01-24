@@ -45,13 +45,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "127.0.0.1:8000/salle",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"salle"
+							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Concert",
@@ -109,8 +118,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Event",
@@ -145,9 +153,17 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "List Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Ticket",
@@ -159,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": 1,\n\t\"obtainingMethodId\": 1,\n\t\"seatId\": [1,2],\n\t\"price\": 100,\n\t\"cancellationInsurance\": false,\n\t\"qrCodeUrl\": \"\"\n}",
+							"raw": "//Un objet pour chaque concert\n{\n\t\"userId\": 1,\n\t\"obtainingMethodId\": 1,\n\t\"seatId\": [1,2],\n\t\"price\": 100,\n\t\"cancellationInsurance\": false,\n\t\"qrCodeUrl\": \"\",\n    \"parking\": false,\n    \"restaurantPlaces\": 2,\n    \"restaurantTime\": \"1985-04-12T23:20:50.52Z\" \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,9 +198,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
