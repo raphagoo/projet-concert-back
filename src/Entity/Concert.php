@@ -18,31 +18,31 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $time;
 
     /**
      * @ORM\Column(type="time")
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $openingTime;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $priceMax;
 
@@ -73,7 +73,7 @@ class Concert
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="concerts")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_search"})
      */
     private $event;
 

@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\BL\CategoryManager;
 use App\BL\ConcertManager;
 use App\BL\EventManager;
 use App\BL\SalleManager;
@@ -88,6 +89,21 @@ class ConcertController extends AbstractController
     }
 
     /**
+     * @Route("/concert/search", name="searchEvent", methods={"GET"})
+     * @param SalleManager $salleManager
+     * @param ConcertManager $concertManager
+     * @param CategoryManager $categoryManager
+     * @return Response
+     */
+    public function searchConcert(SalleManager $salleManager, ConcertManager $concertManager, CategoryManager $categoryManager){
+        $salles = $salleManager->getSalles();
+        $concerts = $concertManager->getConcerts();
+        $categories = $categoryManager->getCategories();
+
+        return $this->serializer->prepareResponse(['salles' => $salles, 'categories' => $categories, 'concerts' => $concerts], 'concert_search');
+    }
+
+    /**
      * @Route("/concert/{idConcert}", name="getConcert")
      * @param $idConcert
      * @param ConcertManager $concertManager
@@ -102,4 +118,5 @@ class ConcertController extends AbstractController
 
         return $this->serializer->prepareResponse($concert, "concert_details");
     }
+
 }

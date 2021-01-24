@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\BL\CategoryManager;
 use App\BL\ConcertManager;
 use App\BL\EventManager;
 use App\BL\SalleManager;

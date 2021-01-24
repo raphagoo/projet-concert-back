@@ -17,7 +17,7 @@ class Event
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"event_details", "concert_details", "salle_details"})
+     * @Groups({"event_details", "concert_details", "salle_details", "concert_search"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("event_details")
+     * @Groups({"event_details", "concert_search"})
      */
     private $imageThumbnail;
 
@@ -41,7 +41,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("event_details")
+     * @Groups({"event_details", "concert_search"})
      */
     private $artistName;
 
@@ -72,12 +72,13 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("event_details")
+     * @Groups({"event_details", "concert_search"})
      */
     private $salle;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="event")
+     * @Groups("concert_search")
      */
     private $categories;
 
