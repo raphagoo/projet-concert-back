@@ -14,6 +14,7 @@ use App\Helpers\SerializerHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,5 +55,36 @@ class EventController extends AbstractController
         $eventManager->save($event);
 
         return $this->json($json, $status = 200, $headers = [], $context = []);
+    }
+
+    /**
+     * @Route("/event/search", name="searchEvent", methods={"GET"})
+     * @param SalleManager $salleManager
+     * @param EventManager $eventManager
+     * @param CategoryManager $categoryManager
+     * @return Response
+     */
+    public function searchEvent(SalleManager $salleManager, EventManager $eventManager, CategoryManager $categoryManager){
+        $salles = $salleManager->getSalles();
+        $events = $eventManager->getEvents();
+        $categories = $categoryManager->getCategories();
+
+        return $this->serializer->prepareResponse(['salles' => $salles, 'categories' => $categories, 'events' => $events], 'event_search');
+    }
+
+    /**
+     * @Route("/event/{idEvent}", name="getEvent")
+     * @param $idEvent
+     * @param EventManager $eventManager
+     * @return Response
+     */
+    public function getEvent($idEvent, EventManager $eventManager){
+        $event = $eventManager->findEventById($idEvent);
+
+        if(!$event) {
+            return (new JsonResponse('event not found'))->setStatusCode(404);
+        }
+
+        return $this->serializer->prepareResponse($event, "event_details");
     }
 }

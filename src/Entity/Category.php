@@ -17,13 +17,13 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups ("concert_search")
+     * @Groups ({"event_search", "event_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups ("concert_search")
+     * @Groups ({"event_search", "event_details"})
      */
     private $name;
 
