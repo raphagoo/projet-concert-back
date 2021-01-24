@@ -6,6 +6,8 @@ use App\Repository\ConcertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=ConcertRepository::class)
@@ -16,52 +18,62 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("concert_details")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="date")
+     * @Groups("concert_details")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="time")
+     * @Groups("concert_details")
      */
     private $time;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="time")
+     * @Groups("concert_details")
      */
     private $openingTime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("concert_details")
      */
     private $priceMax;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("concert_details")
      */
     private $percentage;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("concert_details")
      */
     private $categoryNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("concert_details")
      */
     private $artistDescription;
 
     /**
      * @ORM\OneToMany(targetEntity=Seat::class, mappedBy="concert", orphanRemoval=true)
+     * @Groups("concert_details")
      */
     private $seats;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="concerts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("concert_details")
      */
     private $event;
 
@@ -75,36 +87,36 @@ class Concert
         return $this->id;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getTime(): ?string
+    public function getTime(): ?\DateTimeInterface
     {
         return $this->time;
     }
 
-    public function setTime(string $time): self
+    public function setTime(\DateTimeInterface $time): self
     {
         $this->time = $time;
 
         return $this;
     }
 
-    public function getOpeningTime(): ?string
+    public function getOpeningTime(): ?\DateTimeInterface
     {
         return $this->openingTime;
     }
 
-    public function setOpeningTime(string $openingTime): self
+    public function setOpeningTime(\DateTimeInterface $openingTime): self
     {
         $this->openingTime = $openingTime;
 

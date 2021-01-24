@@ -33,7 +33,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route ("/event/create", name="createEvent")
+     * @Route ("/event", name="createEvent", methods={"POST"})
      * @param Request $request
      * @param EventManager $eventManager
      * @param SalleManager $salleManager

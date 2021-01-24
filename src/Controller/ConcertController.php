@@ -35,7 +35,7 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route ("/concert/create", name="createConcert")
+     * @Route ("/concert", name="createConcert", methods={"POST"})
      * @param Request $request
      * @param EventManager $eventManager
      * @param ConcertManager $concertManager
@@ -82,8 +82,8 @@ class ConcertController extends AbstractController
             }
             $category++;
         }
-
-        return $this->json($json, $status = 200, $headers = [], $context = []);
+        return $this->serializer->prepareResponse($concert, "concert_details");
+        //return $this->json($json, $status = 200, $headers = [], $context = []);
     }
 
     /**
@@ -95,6 +95,6 @@ class ConcertController extends AbstractController
     public function getConcert($idConcert, ConcertManager $concertManager){
         $concert = $concertManager->findConcertById($idConcert);
 
-        return $this->serializer->prepareResponse($concert);
+        return $this->serializer->prepareResponse($concert, "concert_details");
     }
 }

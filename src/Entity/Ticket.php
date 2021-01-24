@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
@@ -15,59 +16,64 @@ class Ticket
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"ticket_creation", "concert_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("ticket_creation")
      */
     private $price;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("ticket_creation")
      */
     private $cancellationInsurance;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("ticket_creation")
      */
     private $purchaseDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("ticket_creation")
      */
     private $qrCodeUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity=TicketObtaining::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
-     * @MaxDepth(1)
+     * @Groups("ticket_creation")
      */
     private $obtainingMethod;
 
     /**
      * @ORM\OneToOne(targetEntity=ParkingTicket::class, mappedBy="ticket", cascade={"persist", "remove"})
-     * @MaxDepth(2)
+     * @Groups("ticket_creation")
      */
     private $parkingTicket;
 
     /**
      * @ORM\OneToOne(targetEntity=RestaurantTicket::class, mappedBy="ticket", cascade={"persist", "remove"})
-     * @MaxDepth(2)
+     * @Groups("ticket_creation")
      */
     private $restaurantTicket;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
-     * @MaxDepth(2)
+     * @Groups("ticket_creation")
      */
     private $reservation;
 
     /**
      * @ORM\ManyToOne(targetEntity=Seat::class, inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
-     * @MaxDepth(1)
+     * @Groups("ticket_creation")
      */
     private $seat;
 

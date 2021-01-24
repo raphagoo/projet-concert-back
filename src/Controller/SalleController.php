@@ -31,7 +31,7 @@ class SalleController extends AbstractController
     }
 
     /**
-     * @Route ("/salle/create", name="createSalle")
+     * @Route ("/salle", name="createSalle", methods={"POST"})
      * @param Request $request
      * @param SalleManager $salleManager
      * @return Response
@@ -40,22 +40,23 @@ class SalleController extends AbstractController
         $json = $request->getContent();
 
 
-        $salle = $this->serializer->deserializeRequest($json, Salle::class);
+        $salle = new Salle();
+        $salle = $this->serializer->deserializeRequest($json, Salle::class, $salle);
 
         $salleManager->save($salle);
 
-        return $this->json($json, $status = 200, $headers = [], $context = []);
+        return $this->json($json, $status = 201, $headers = [], $context = []);
     }
 
     /**
-     * @Route ("/salle/list", name="listSalle")
+     * @Route ("/salle", name="listSalle", methods={"GET"})
      * @param SalleManager $salleManager
      * @return Response
      */
     public function listSalle(SalleManager $salleManager){
         $salles = $salleManager->getSalles();
 
-        return $this->serializer->prepareResponse($salles);
+        return $this->serializer->prepareResponse($salles, 'salle_list');
     }
 
 }

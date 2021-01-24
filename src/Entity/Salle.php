@@ -17,47 +17,55 @@ class Salle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("event_details")
+     * @Groups({"event_details", "salle_details", "salle_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $phoneNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_details", "salle_list"})
      */
     private $capacity;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="salle")
+     * @Groups("salle_details")
      */
     private $events;
 
     /**
      * @ORM\OneToOne(targetEntity=Parking::class, mappedBy="salle", cascade={"persist", "remove"})
+     * @Groups("salle_details")
      */
     private $parking;
 
     /**
      * @ORM\OneToOne(targetEntity=Restaurant::class, mappedBy="salle", cascade={"persist", "remove"})
+     * @Groups("salle_details")
      */
     private $restaurant;
 
