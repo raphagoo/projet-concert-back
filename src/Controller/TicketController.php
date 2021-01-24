@@ -4,10 +4,8 @@
 namespace App\Controller;
 
 
-use App\BL\ParkingManager;
 use App\BL\ParkingTicketManager;
 use App\BL\ReservationManager;
-use App\BL\RestaurantManager;
 use App\BL\RestaurantTicketManager;
 use App\BL\SeatManager;
 use App\BL\TicketManager;
@@ -19,6 +17,7 @@ use App\Entity\RestaurantTicket;
 use App\Entity\Ticket;
 use App\Helpers\SerializerHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,7 +51,7 @@ class TicketController extends AbstractController
      * @param RestaurantTicketManager $restaurantTicketManager
      * @param ParkingTicketManager $parkingTicketManager
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function createTicket(Request $request, TicketManager $ticketManager, UserManager $userManager, SeatManager $seatManager, ReservationManager $reservationManager, TicketObtainingManager $ticketObtainingManager, RestaurantTicketManager $restaurantTicketManager, ParkingTicketManager $parkingTicketManager){
         $json = $request->getContent();
