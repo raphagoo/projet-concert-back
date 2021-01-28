@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UserController
 {
@@ -23,14 +24,17 @@ class UserController
      */
     private $em;
 
+    private $security;
+
     /**
      * AppFixtures constructor.
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $em)
+    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $em, Security $security)
     {
         $this->encoder = $encoder;
         $this->em = $em;
+        $this->security = $security;
     }
 
     /**
@@ -55,5 +59,18 @@ class UserController
         $data = array("username" => $user->getUsername(), "email" => $user->getEmail());
 
         return new JsonResponse($data, 201);
+    }
+
+    /**
+     * @Route("/test", name="test")
+     * @param Request $request
+     */
+    public function test(Request $request)
+    {
+        $user = $this->security->getUser();
+        $data = array("username" => $user->getUsername(), "email" => $user->getEmail());
+
+        return new JsonResponse($data, 200);
+
     }
 }
