@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ConcertRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=ConcertRepository::class)
@@ -14,43 +18,69 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"concert_details", "event_search", "event_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"concert_details", "event_search", "event_details"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"concert_details", "event_search", "event_details"})
      */
     private $time;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"concert_details", "event_search", "event_details"})
      */
     private $openingTime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"concert_details", "event_search", "event_details"})
      */
     private $priceMax;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"concert_details", "event_details"})
      */
     private $percentage;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"concert_details", "event_details"})
      */
     private $categoryNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"concert_details"})
      */
     private $artistDescription;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Seat::class, mappedBy="concert", orphanRemoval=true)
+     * @Groups("concert_details")
+     */
+    private $seats;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="concerts")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups("concert_details")
+     */
+    private $event;
+
+    public function __construct()
+    {
+        $this->seats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -140,4 +170,47 @@ class Concert
 
         return $this;
     }
+
+    /**
+     * @return Collection|Seat[]
+     */
+    public function getSeats(): Collection
+    {
+        return $this->seats;
+    }
+
+    public function addSeat(Seat $seat): self
+    {
+        if (!$this->seats->contains($seat)) {
+            $this->seats[] = $seat;
+            $seat->setConcert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeat(Seat $seat): self
+    {
+        if ($this->seats->removeElement($seat)) {
+            // set the owning side to null (unless already changed)
+            if ($seat->getConcert() === $this) {
+                $seat->setConcert(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
 }

@@ -6,6 +6,7 @@ use App\Repository\ParkingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ParkingRepository::class)
@@ -16,11 +17,13 @@ class Parking
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("salle_details")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("salle_details")
      */
     private $name;
 
@@ -31,6 +34,7 @@ class Parking
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("salle_details")
      */
     private $price;
 

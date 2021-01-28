@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -39,11 +40,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
+     * @MaxDepth(2)
      */
     private $articles;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="client")
+     * @MaxDepth(2)
      */
     private $reservations;
 

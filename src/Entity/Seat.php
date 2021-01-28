@@ -6,6 +6,8 @@ use App\Repository\SeatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=SeatRepository::class)
@@ -16,34 +18,45 @@ class Seat
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"ticket_creation", "concert_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"ticket_creation", "concert_details"})
      */
     private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"ticket_creation", "concert_details"})
      */
     private $letter;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"ticket_creation", "concert_details"})
      */
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="seats")
+     * @ORM\ManyToOne(targetEntity=Concert::class, inversedBy="seats")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $salle;
+    private $concert;
 
     /**
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="seat")
+     * @Groups({"concert_details"})
      */
     private $tickets;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"ticket_creation", "concert_details"})
+     */
+    private $price;
 
     public function __construct()
     {
@@ -91,14 +104,14 @@ class Seat
         return $this;
     }
 
-    public function getSalle(): ?Salle
+    public function getConcert(): ?Concert
     {
-        return $this->salle;
+        return $this->concert;
     }
 
-    public function setSalle(?Salle $salle): self
+    public function setConcert(?Concert $concert): self
     {
-        $this->salle = $salle;
+        $this->concert = $concert;
 
         return $this;
     }
@@ -132,4 +145,17 @@ class Seat
 
         return $this;
     }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

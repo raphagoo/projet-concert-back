@@ -6,6 +6,7 @@ use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -27,11 +28,13 @@ class Reservation
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(2)
      */
     private $client;
 
     /**
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="reservation")
+     * @MaxDepth(2)
      */
     private $tickets;
 

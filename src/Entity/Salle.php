@@ -6,6 +6,7 @@ use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SalleRepository::class)
@@ -16,58 +17,61 @@ class Salle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"event_details", "salle_details", "salle_list", "event_search"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list", "event_search"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $phoneNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_details", "salle_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_details", "salle_list"})
      */
     private $capacity;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="salle")
+     * @Groups("salle_details")
      */
     private $events;
 
     /**
      * @ORM\OneToOne(targetEntity=Parking::class, mappedBy="salle", cascade={"persist", "remove"})
+     * @Groups("salle_details")
      */
     private $parking;
 
     /**
      * @ORM\OneToOne(targetEntity=Restaurant::class, mappedBy="salle", cascade={"persist", "remove"})
+     * @Groups("salle_details")
      */
     private $restaurant;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Seat::class, mappedBy="salle", orphanRemoval=true)
-     */
-    private $seats;
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->seats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,36 +209,6 @@ class Salle
         }
 
         $this->restaurant = $restaurant;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Seat[]
-     */
-    public function getSeats(): Collection
-    {
-        return $this->seats;
-    }
-
-    public function addSeat(Seat $seat): self
-    {
-        if (!$this->seats->contains($seat)) {
-            $this->seats[] = $seat;
-            $seat->setSalle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeat(Seat $seat): self
-    {
-        if ($this->seats->removeElement($seat)) {
-            // set the owning side to null (unless already changed)
-            if ($seat->getSalle() === $this) {
-                $seat->setSalle(null);
-            }
-        }
 
         return $this;
     }
