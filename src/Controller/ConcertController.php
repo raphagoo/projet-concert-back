@@ -89,7 +89,7 @@ class ConcertController extends AbstractController
     }
 
     /**
-     * @Route("/concert/{idConcert}", name="getConcert")
+     * @Route("/concert/{idConcert}", name="getConcert", methods={"GET"})
      * @param $idConcert
      * @param ConcertManager $concertManager
      * @return Response
@@ -102,6 +102,17 @@ class ConcertController extends AbstractController
         }
 
         return $this->serializer->prepareResponse($concert, "concert_details");
+    }
+
+    /**
+     * @Route ("/concert", name="listConcert", methods={"GET"})
+     * @param ConcertManager $concertManager
+     * @return Response
+     */
+    public function listConcert(ConcertManager $concertManager){
+        $concerts = $concertManager->getConcerts();
+
+        return $this->serializer->prepareResponse($concerts, 'concert_list');
     }
 
 }

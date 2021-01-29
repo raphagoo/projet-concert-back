@@ -15,30 +15,26 @@ class RestaurantTicket
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("ticket_creation")
+     * @Groups({"ticket_creation", "restaurantTicket_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="time")
-     * @Groups("ticket_creation")
+     * @Groups({"ticket_creation", "restaurantTicket_details"})
      */
     private $reservationTime;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("ticket_creation")
+     * @Groups({"ticket_creation", "restaurantTicket_details"})
      */
     private $numberPlace;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $modificationDate;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Restaurant::class, inversedBy="restaurantTickets")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("restaurantTicket_details")
      */
     private $restaurant;
 
@@ -73,18 +69,6 @@ class RestaurantTicket
     public function setNumberPlace(int $numberPlace): self
     {
         $this->numberPlace = $numberPlace;
-
-        return $this;
-    }
-
-    public function getModificationDate(): ?\DateTimeInterface
-    {
-        return $this->modificationDate;
-    }
-
-    public function setModificationDate(\DateTimeInterface $modificationDate): self
-    {
-        $this->modificationDate = $modificationDate;
 
         return $this;
     }

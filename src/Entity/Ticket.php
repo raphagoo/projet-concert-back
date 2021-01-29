@@ -77,6 +77,11 @@ class Ticket
      */
     private $seat;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modificationDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -196,6 +201,18 @@ class Ticket
     public function setSeat(?Seat $seat): self
     {
         $this->seat = $seat;
+
+        return $this;
+    }
+
+    public function getModificationDate(): ?\DateTimeInterface
+    {
+        return $this->modificationDate;
+    }
+
+    public function setModificationDate(?\DateTimeInterface $modificationDate): self
+    {
+        $this->modificationDate = $modificationDate;
 
         return $this;
     }
