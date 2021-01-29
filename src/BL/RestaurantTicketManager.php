@@ -39,13 +39,13 @@ class RestaurantTicketManager
 
     /**
      * @param RestaurantTicket $restaurantTicket
-     * @return int|null
+     * @return RestaurantTicket
      */
     public function save(RestaurantTicket $restaurantTicket){
 
         $this->em->persist($restaurantTicket);
         $this->em->flush();
-        return $restaurantTicket->getId();
+        return $restaurantTicket;
     }
 
     /**

@@ -17,24 +17,25 @@ class Restaurant
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "restaurantTicket_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "restaurantTicket_details"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "restaurantTicket_details"})
      */
     private $price;
 
     /**
      * @ORM\OneToOne(targetEntity=Salle::class, inversedBy="restaurant", cascade={"persist", "remove"})
+     * @Groups({"salle_details", "restaurantTicket_details"})
      */
     private $salle;
 

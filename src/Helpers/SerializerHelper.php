@@ -38,28 +38,6 @@ class SerializerHelper
         return $response;
     }
 
-    public function normalizeObject($toNormalize){
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-
-// all callback parameters are optional (you can omit the ones you don't use)
-        $maxDepthHandler = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
-            return $innerObject->id;
-        };
-
-        $defaultContext = [
-            AbstractObjectNormalizer::MAX_DEPTH_HANDLER => $maxDepthHandler,
-        ];
-        $normalizer = new ObjectNormalizer($classMetadataFactory, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer]);
-
-        try {
-            return $serializer->normalize($toNormalize, 'json', [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
-        } catch (ExceptionInterface $e) {
-        }
-        return null;
-    }
-
     public function deserializeRequest($jsonObject, $objectClass, $objectToPopulate){
         return $this->serializer->deserialize($jsonObject, $objectClass, 'json', ['object_to_populate' => $objectToPopulate, 'deep_object_to_populate' => true]);
     }

@@ -20,11 +20,6 @@ class ParkingTicket
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $modificationDate;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Parking::class, inversedBy="parkingTickets")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -39,18 +34,6 @@ class ParkingTicket
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getModificationDate(): ?\DateTimeInterface
-    {
-        return $this->modificationDate;
-    }
-
-    public function setModificationDate(\DateTimeInterface $modificationDate): self
-    {
-        $this->modificationDate = $modificationDate;
-
-        return $this;
     }
 
     public function getParking(): ?Parking

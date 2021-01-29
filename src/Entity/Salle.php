@@ -17,7 +17,7 @@ class Salle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"event_details", "salle_details", "salle_list"})
+     * @Groups({"event_details", "salle_details", "salle_list", "restaurantTicket_details"})
      */
     private $id;
 
