@@ -41,6 +41,7 @@ class UserController
      * @Route("/register", name="createUser")
      * @param Request $request
      * @param UserManager $manager
+     * @return JsonResponse
      */
     public function register(Request $request, UserManager $manager)
     {
@@ -64,6 +65,7 @@ class UserController
     /**
      * @Route("/test", name="test")
      * @param Request $request
+     * @return JsonResponse
      */
     public function test(Request $request)
     {
