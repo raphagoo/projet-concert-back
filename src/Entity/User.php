@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
@@ -19,11 +20,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user_detail"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user_detail"})
      */
     private $email;
 
@@ -49,6 +52,72 @@ class User implements UserInterface
      * @MaxDepth(2)
      */
     private $reservations;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_detail"})
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_detail"})
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=1)
+     * @Groups({"user_detail"})
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="string", length=1000)
+     * @Groups({"user_detail"})
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     * @Groups({"user_detail"})
+     */
+    private $residence;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     * @Groups({"user_detail"})
+     */
+    private $locality;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     * @Groups({"user_detail"})
+     */
+    private $zipCode;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_detail"})
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_detail"})
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"user_detail"})
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Groups({"user_detail"})
+     */
+    private $birthDate;
 
     public function __construct()
     {
@@ -190,6 +259,138 @@ class User implements UserInterface
                 $reservation->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getResidence(): ?string
+    {
+        return $this->residence;
+    }
+
+    public function setResidence(?string $residence): self
+    {
+        $this->residence = $residence;
+
+        return $this;
+    }
+
+    public function getLocality(): ?string
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(?string $locality): self
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(string $zipCode): self
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(\DateTimeInterface $birthDate): self
+    {
+        $this->birthDate = $birthDate;
 
         return $this;
     }
