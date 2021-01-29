@@ -45,13 +45,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "127.0.0.1:8000/salle",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"salle"
+							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Concert",
@@ -63,7 +72,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"date\": \"1985-04-12T23:20:50.52Z\",\n\t\"time\": \"1985-04-12T23:20:50.52Z\",\n\t\"openingTime\": \"1985-04-12T23:20:50.52Z\",\n\t\"priceMax\": 300,\n\t\"percentage\": 5,\n\t\"categoryNumber\": 3,\n\t\"artistDescription\": \"blabla\",\n\t\"eventId\": \"1\"\n}",
+							"raw": "{\n\t\"date\": \"1985-04-12T23:20:50.52Z\",\n\t\"time\": \"1985-04-12T23:20:50.52Z\",\n\t\"openingTime\": \"1985-04-12T23:20:50.52Z\",\n\t\"priceMax\": 400,\n\t\"percentage\": 4,\n\t\"categoryNumber\": 2,\n\t\"artistDescription\": \"machin\",\n\t\"eventId\": \"1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -71,7 +80,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/concert/create",
+							"raw": "127.0.0.1:8000/concert",
 							"host": [
 								"127",
 								"0",
@@ -80,8 +89,7 @@
 							],
 							"port": "8000",
 							"path": [
-								"concert",
-								"create"
+								"concert"
 							]
 						}
 					},
@@ -93,7 +101,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "127.0.0.1:8000/concert/7",
+							"raw": "127.0.0.1:8000/concert/9",
 							"host": [
 								"127",
 								"0",
@@ -103,14 +111,13 @@
 							"port": "8000",
 							"path": [
 								"concert",
-								"7"
+								"9"
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Event",
@@ -145,9 +152,61 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "List Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Search Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/event/search",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"event",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/event/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Ticket",
@@ -159,7 +218,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": 1,\n\t\"obtainingMethodId\": 1,\n\t\"seatId\": [1,2],\n\t\"price\": 100,\n\t\"cancellationInsurance\": false,\n\t\"qrCodeUrl\": \"\"\n}",
+							"raw": "{\n\t\"userId\": 1,\n\t\"obtainingMethodId\": 1,\n\t\"seatId\": [1,2],\n\t\"price\": 100,\n\t\"cancellationInsurance\": false,\n\t\"qrCodeUrl\": \"\",\n    \"parking\": false,\n    \"restaurantPlaces\": 2,\n    \"restaurantTime\": \"1985-04-12T23:20:50.52Z\" \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,9 +241,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

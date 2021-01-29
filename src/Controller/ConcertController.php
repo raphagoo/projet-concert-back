@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\BL\CategoryManager;
 use App\BL\ConcertManager;
 use App\BL\EventManager;
 use App\BL\SalleManager;
@@ -15,6 +16,7 @@ use App\Helpers\SerializerHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,6 +97,11 @@ class ConcertController extends AbstractController
     public function getConcert($idConcert, ConcertManager $concertManager){
         $concert = $concertManager->findConcertById($idConcert);
 
+        if(!$concert) {
+            return (new JsonResponse('concert not found'))->setStatusCode(404);
+        }
+
         return $this->serializer->prepareResponse($concert, "concert_details");
     }
+
 }
