@@ -18,43 +18,43 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"concert_details", "event_search", "event_details"})
+     * @Groups({"concert_details", "event_search", "event_details", "concert_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"concert_details", "event_search", "event_details"})
+     * @Groups({"concert_details", "event_search", "event_details", "concert_list"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
-     * @Groups({"concert_details", "event_search", "event_details"})
+     * @Groups({"concert_details", "event_search", "event_details", "concert_list"})
      */
     private $time;
 
     /**
      * @ORM\Column(type="time")
-     * @Groups({"concert_details", "event_search", "event_details"})
+     * @Groups({"concert_details", "event_search", "event_details", "concert_list"})
      */
     private $openingTime;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"concert_details", "event_search", "event_details"})
+     * @Groups({"concert_details", "event_search", "event_details", "concert_list"})
      */
     private $priceMax;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"concert_details", "event_details"})
+     * @Groups({"concert_details", "event_details", "concert_list"})
      */
     private $percentage;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"concert_details", "event_details"})
+     * @Groups({"concert_details", "event_details", "concert_list"})
      */
     private $categoryNumber;
 
@@ -73,7 +73,7 @@ class Concert
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="concerts")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("concert_details")
+     * @Groups({"concert_details", "concert_list"})
      */
     private $event;
 

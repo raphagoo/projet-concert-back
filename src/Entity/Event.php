@@ -17,13 +17,13 @@ class Event
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"event_details", "concert_details", "salle_details", "event_search"})
+     * @Groups({"event_details", "concert_details", "salle_details", "event_search", "concert_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"event_details", "concert_details", "salle_details"})
+     * @Groups({"event_details", "concert_details", "salle_details", "concert_list"})
      */
     private $name;
 
