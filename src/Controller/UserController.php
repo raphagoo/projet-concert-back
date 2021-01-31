@@ -81,8 +81,8 @@ class UserController
             throw new BadRequestHttpException($message);
         }
 
-        if(($birthDate = DateTime::createFromFormat('d/m/Y', $birthDateStr)) === false){
-            $message = "The birthDate format is incorrect (format: dd/mm/YYYY)";
+        if(($birthDate = DateTime::createFromFormat('Y-m-d', $birthDateStr)) === false){
+            $message = "The birthDate format is incorrect (format: YYYY-mm-dd)";
             throw new BadRequestHttpException($message);
         }
 
