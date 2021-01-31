@@ -274,7 +274,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idTicket\": 1,\r\n    \"reservationTime\": \"1985-04-12T23:20:50.52Z\",\r\n    \"email\": \"blabla@gmail.com\",\r\n    \"name\": \"mon user\",\r\n    \"surname\": \"prenom\",\r\n    \"numberPlace\": 2,\r\n    \"phoneNumber\": \"0458456978\"\r\n}",
+							"raw": "{\r\n    \"reservationTime\": \"1985-04-12T23:20:50.52Z\",\r\n    \"email\": \"blabla@gmail.com\",\r\n    \"name\": \"mon user\",\r\n    \"surname\": \"prenom\",\r\n    \"numberPlace\": 2,\r\n    \"phoneNumber\": \"0458456978\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -282,7 +282,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/restaurant",
+							"raw": "127.0.0.1:8000/restaurant/idTicket",
 							"host": [
 								"127",
 								"0",
@@ -291,7 +291,8 @@
 							],
 							"port": "8000",
 							"path": [
-								"restaurant"
+								"restaurant",
+								"idTicket"
 							]
 						}
 					},
@@ -326,6 +327,279 @@
 							"path": [
 								"restaurant",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTE5MjU4NzksImV4cCI6MTYxMTkyOTQ3OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoicmFwaGFlbC5hZ29AeW5vdi5mciJ9.Hcc3pLq1_xFZC5HqrttB3HoPWQqp_VjI71JTM4MMK5gdIYgkLFc0kDpZ-MDfjwSipJpBLPLJ8Eh6BrOrw2Z_flXq2Ahe8o14_wIR9KbHr4tOn5BGLevOnC7egQmLyWk7XuZ3sRNKGwNYnO7rubRg93cO_04Q7u4fS7zfZ1JK6z4FASjDClacqy9T-bX_fdlocprdZyXucOVzDS5N2sQR9d5h7SFdM8Sd-Mrih8f7cT27VhJz8NigNcr5M98SMN9qUbW880RmE70hHiYyBdfqujx505YtEQhjvmpbxS14F7MHPcJjy79FLMxPIW9g7nzbEsb3R4JSQXdx31JXjBAu-Y7loFH0eD8J_YEgGxNEU1pthil1afe9GjTbwRrgjBFMj8-9yuHI-TtXGZ9E1m11p_0KH4bcd19_fGD28qyHEGRFLe-DzED0j8RlaWTTAtHbAH9U6hnjqmlaDdDJUcyYI38alKDxfIz95EjwUk_s_gNiugowxUHG-K4WHMCMBqR_Bdsk0v9trYZxVBFwz3svG_0AFjBNESUSbwI-Ql1DjGVzjU_7fB3a87v8U3iD_rJ_wxFDYPxF59FeVsCcge21a2OInfPdQ1tzT5qlw5BCJlCxSPJRHaWxoCqUKiGGbjmRqUDoh9T7NOHPzcrr95tLq8rVCfb2NMwbIt9IhQzn0FI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reservationTime\": \"1985-04-12T23:20:50.52Z\",\r\n    \"email\": \"blabla@gmail.com\",\r\n    \"name\": \"mon user\",\r\n    \"surname\": \"prenom\",\r\n    \"numberPlace\": 2,\r\n    \"phoneNumber\": \"0458456978\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/restaurant/idTicket",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"restaurant",
+								"idTicket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"raphael.ago@hotmail.fr\",\r\n  \"password\": \"123\",\r\n  \"gender\": \"M\",\r\n  \"lastName\": \"string\",\r\n  \"firstName\": \"string\",\r\n  \"address\": \"string\",\r\n  \"residence\": \"string\",\r\n  \"locality\": \"string\",\r\n  \"zipCode\": \"string\",\r\n  \"city\": \"string\",\r\n  \"country\": \"string\",\r\n  \"phoneNumber\": \"string\",\r\n  \"birthdate\": \"2021-01-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/register",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parking",
+			"item": [
+				{
+					"name": "Infos Parking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/parking",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"parking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation Parking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/parking/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"parking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTIxMDYwODksImV4cCI6MTYxMjEwOTY4OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoicmFwaGFlbC5hZ29AeW5vdi5mciJ9.yvDoMrsrN5ILrjFAlTf1CNFFkmdo5wwKgi-MARC6rvx9mzqpatCDvRvxhzp4Oah7GlWv6O8cEaotG0VP1ByQxQgeQtbZ49qbnB2R2TWI-8FcCJF8GSdeuunHacUSvUuYvU8Cf8rplsbMt_AdzhEnzVnWbWPzBY7sWQFsKdZKdOeBEo9dGo1WZhbdT6D3WtdeHt8B1MbBH46YEBai3-aN30WIJRhZBlT2J57xap7GL4FVm0PuDjCoGueXwTIvWXWqncCava1KKIzFZEbG9hY97-nYauhu83n5uK51lQoVhHvhpDrBxWBgsTUhQDwr7G4Kkb3lilFIOdHWk2jnLRvPqFn3slQjxxfWEnVs7K7t7e0yKXS1yBl_sDQmZoq4M8QXNmy51uUQI9hZ1XlYwBiA6L0JHhPAaAMSwHAXQnfIFJgP9GDCxTUGCfEmjljHacPhJ7SLl9cQXMnqi1ZWceLY6oUQb91yvjvzHbkd-jjIJBBKhkD6c9PQkSx2GXGniFU84Y3BjCtIYsjjnAkA-YtzU4zvDxmnGX_6FvorLqstLH6KWymym6s0MPAZcM7oN5-_7-Dx-v_FxSATWOFClqMR9YNsSnIbFo-80u-P3XlhoWASJwiR9Buu-39ZAedPjk7TIRkJH2XDhd8rQhFPms4deD6EsqAZLPPK_pTjKbWoFvs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"blabla@gmail.com\",\r\n    \"name\": \"mon user\",\r\n    \"surname\": \"prenom\",\r\n    \"numberPlace\": 3,\r\n    \"phoneNumber\": \"0458456978\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/parking/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"parking",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Privatization",
+			"item": [
+				{
+					"name": "Create Privatization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"name\",\r\n    \"firstname\": \"firstname\",\r\n    \"phone\": \"0658659845\",\r\n    \"mail\": \"mail\",\r\n    \"date\": \"1985-04-12T23:20:50.52Z\",\r\n    \"time\": \"1985-04-12T23:20:50.52Z\",\r\n    \"numberPerson\": \"numberPerson\",\r\n    \"description\": \"description\",\r\n    \"budget\": \"budget\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1/privatization",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"privatization"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Privatization",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTIxMDIxMzQsImV4cCI6MTYxMjEwNTczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoicmFwaGFlbC5hZ29AeW5vdi5mciJ9.ZTza3xEYz80N_edU5e3pNm99sOmYwvINbd0zlPp9FeFA7k7ep6mrCDBpm6ca_Pw0doMbwRSwN-cpSAWHbvHSU798TEwduXZKnr8jhDBMjL_u51GiZISCCalFpGNPUUk44n8L80aH19BmSMpQndzDQy1xCYN_LFqiYYJqR-sNwGZucV6PLN-oeAaOxmGk_cg6nWQmP7SULoOh-5endIw-Sd25-1KoRPxWKt_3OmzDhfcf5pjZToqe7WJmtVVX2oSDl-9BbhIk1JdillIKj3UMSoIrVUvIjH4xh2sS3W6IVqiSfkpHNZsRu-osL-01qj0FLHfYEA6RCbWheVyx5IOzx7poxfTttNSR73CJVZ4aO8upa4f4B16D3xpr30rk5vlzcMkB9G8K04RWZROwIJTxb8XW5t-bng2f7pjkes5k6g8t42iS-qWitlyQiQWpASVUhlfXHXp417WhkT_490uGB2yjCoQJa_e_wQ-RdRhR4oIdFYHjJ5ChG8PiDlmqQBaO2aW3oMv7p97qdssbHInOgDrDxslgLuPPXh30wdiitwIZleZ2dd9ZcPRiCHLTg-m_pcT23yy8OcNrN5gVvCpYRSTmbB3QpMzXHa_8R9l9gxU-8u1MoRP97bvb6h95ELWCOPiGl_Qa1U5vbJ2jMf4AsU6GhYONfEw4K40_O7IsHtw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/privatization/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"privatization",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Privatization",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTIxMDIxMzQsImV4cCI6MTYxMjEwNTczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoicmFwaGFlbC5hZ29AeW5vdi5mciJ9.ZTza3xEYz80N_edU5e3pNm99sOmYwvINbd0zlPp9FeFA7k7ep6mrCDBpm6ca_Pw0doMbwRSwN-cpSAWHbvHSU798TEwduXZKnr8jhDBMjL_u51GiZISCCalFpGNPUUk44n8L80aH19BmSMpQndzDQy1xCYN_LFqiYYJqR-sNwGZucV6PLN-oeAaOxmGk_cg6nWQmP7SULoOh-5endIw-Sd25-1KoRPxWKt_3OmzDhfcf5pjZToqe7WJmtVVX2oSDl-9BbhIk1JdillIKj3UMSoIrVUvIjH4xh2sS3W6IVqiSfkpHNZsRu-osL-01qj0FLHfYEA6RCbWheVyx5IOzx7poxfTttNSR73CJVZ4aO8upa4f4B16D3xpr30rk5vlzcMkB9G8K04RWZROwIJTxb8XW5t-bng2f7pjkes5k6g8t42iS-qWitlyQiQWpASVUhlfXHXp417WhkT_490uGB2yjCoQJa_e_wQ-RdRhR4oIdFYHjJ5ChG8PiDlmqQBaO2aW3oMv7p97qdssbHInOgDrDxslgLuPPXh30wdiitwIZleZ2dd9ZcPRiCHLTg-m_pcT23yy8OcNrN5gVvCpYRSTmbB3QpMzXHa_8R9l9gxU-8u1MoRP97bvb6h95ELWCOPiGl_Qa1U5vbJ2jMf4AsU6GhYONfEw4K40_O7IsHtw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/privatization",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"privatization"
 							]
 						}
 					},
