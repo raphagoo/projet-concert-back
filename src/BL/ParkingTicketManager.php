@@ -39,13 +39,13 @@ class ParkingTicketManager
 
     /**
      * @param ParkingTicket $parkingTicket
-     * @return int|null
+     * @return ParkingTicket
      */
     public function save(ParkingTicket $parkingTicket){
 
         $this->em->persist($parkingTicket);
         $this->em->flush();
-        return $parkingTicket->getId();
+        return $parkingTicket;
     }
 
     /**

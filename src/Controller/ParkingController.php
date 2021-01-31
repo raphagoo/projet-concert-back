@@ -51,7 +51,7 @@ class ParkingController extends AbstractController
     }
 
     /**
-     * @Route("/parking/{idTicket}", name="getParkingReservation", methods={"POST"})
+     * @Route("/parking/{idTicket}", name="createParkingReservation", methods={"POST"})
      * @param Request $request
      * @param $idTicket
      * @param TicketManager $ticketManager
@@ -89,7 +89,7 @@ class ParkingController extends AbstractController
     }
 
     /**
-     * @Route("/parking/{idTicket}", name="getParkingReservation", methods={"PUT"})
+     * @Route("/parking/{idTicket}", name="updateParkingReservation", methods={"PUT"})
      * @param Request $request
      * @param $idTicket
      * @param TicketManager $ticketManager
