@@ -41,7 +41,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"event_details", "event_search", "concert_details", "search"})
+     * @Groups({"event_details", "event_search", "concert_details", "search", "concert_list"})
      */
     private $artistName;
 
@@ -59,26 +59,26 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("event_details")
+     * @Groups({"event_details", "concert_list"})
      */
     private $songLink;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"event_details", "event_search"})
+     * @Groups({"event_details", "event_search", "concert_list"})
      */
     private $artistDescription;
 
     /**
      * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"event_details", "event_search", "concert_details"})
+     * @Groups({"event_details", "event_search", "concert_details", "concert_list"})
      */
     private $salle;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="event")
-     * @Groups({"event_details", "event_search", "concert_details", "search"})
+     * @Groups({"event_details", "event_search", "concert_details", "search", "concert_list"})
      */
     private $categories;
 
