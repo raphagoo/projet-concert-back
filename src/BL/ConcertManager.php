@@ -5,6 +5,7 @@ namespace App\BL;
 
 
 use App\Entity\Concert;
+use App\Entity\Seat;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ConcertManager
