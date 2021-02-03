@@ -73,6 +73,17 @@ class EventController extends AbstractController
     }
 
     /**
+     * @Route("/event/latest", name="getLatestEvent", methods={"GET"})
+     * @param EventManager $eventManager
+     * @return Response
+     */
+    public function getLatestEvent(EventManager $eventManager){
+        $event = $eventManager->getLatestEvent();
+        return $this->serializer->prepareResponse($event, 'event_details');
+
+    }
+
+    /**
      * @Route("/event/{idEvent}", name="getEvent")
      * @param $idEvent
      * @param EventManager $eventManager
