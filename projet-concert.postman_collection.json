@@ -226,6 +226,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Latest event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/event/latest",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"event",
+								"latest"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -600,6 +622,54 @@
 							"port": "8000",
 							"path": [
 								"privatization"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTIzNTg1ODgsImV4cCI6MTYxMjM2MjE4OCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoicmFwaGFlbC5hZ29AeW5vdi5mciJ9.k5Ug7C0C7w9tIYdp-1DeN4wP-npUvU2JSdf-GBoenscMR4sdxZnXhhUJBQqMTIsys_QsPEjOnsTp766ig1qJs9gukrFWKMWq4ovSUIyyTU7yxURyXZp2y7hMRxiKfxAlTLdkGHx1i1JUvoj9g7x8RU5YYwe3uUiAsj6td9k2ObdT000AzC4xXzEYHDPTJplF2d8_YaZJfu_WiviivtM8mC93rZDE46YcImjrdvgGzor02ER72qIpMrYZBuNQzj_4h7gp4F3plgi8ozvu7G0LjH91IGAH7YhE32uOMRl7oBkBJjes6rgExhOueSL3_EwJbEHBpMZW9ASmY_wXIUnuc7np-t55fPO-dKFdrNgbOcCIsKAthV9zs1_F0P5EQmYhYvst9oarvQKlZpcewo2Bn4IpEPDEGBLPewrsdlC734pYN1d92gLHI2A7ZcGWt6Et-aHoWsfEzZVhYZltlnkBZtL6_c4b-BGfPZtc9BmCed68JjiXwTAAF7IPSgDpkm4jMGgNAYGXGWTKyAe6dFDvsjLqasunxVYOnRs5jQv2s8UKjdUh93oCtkZINCu2IcmqsofUpAtODgS19wf0O7mTLkW7191J4g3DWbrzKOTJq09Ke6Rx-UoiNKQJJRKaauxOBlxU0QYVz8kDyAXdeLaQ4JGHZeRQiBjkC-Whq_xgNes",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"toSearch\": \"Mon\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/search",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"search"
 							]
 						}
 					},
