@@ -19,6 +19,28 @@ class SalleRepository extends ServiceEntityRepository
         parent::__construct($registry, Salle::class);
     }
 
+    public function search($toSearch){
+        $entityManager = $this->getEntityManager();
+        $query1 = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Event e
+            WHERE e.name LIKE :searchTerm
+            OR e.artistName LIKE :searchTerm
+            OR e.artistDescription LIKE :searchTerm'
+        );
+        $query1->setParameter('searchTerm', '%' . $toSearch . '%');
+
+        $query2 = $entityManager->createQuery(
+            'SELECT a
+            FROM App\Entity\Article a
+            WHERE a.title LIKE :searchTerm
+            OR a.text LIKE :searchTerm'
+        );
+        $query2->setParameter('searchTerm', '%' . $toSearch . '%');
+
+        return ['events' => $query1->getResult(), 'articles' => $query2->getResult()];
+    }
+
     // /**
     //  * @return Salle[] Returns an array of Salle objects
     //  */
