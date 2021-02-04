@@ -47,10 +47,38 @@ class ConcertController extends AbstractController
      * @Route ("/concert", name="createConcert", methods={"POST"})
      * @param Request $request
      * @param EventManager $eventManager
+     * @param ConcertManager $concertManager
+     * @param SeatManager $seatManager
+     * @return Response
+     */
+    public function createConcert(Request $request, EventManager $eventManager, ConcertManager $concertManager, SeatManager $seatManager){
+        $json = $request->getContent();
+
+        $data = json_decode($request->getContent(), true);
+
+        $idEvent = $data['eventId'];
+
+        $concert = new Concert();
+        $concert = $this->serializer->deserializeRequest($json,Concert::class, $concert);
+        $concert->setEvent($eventManager->findEventById($idEvent));
+
+        $concert = $concertManager->save($concert);
+
+        $this->em->getRepository(Concert::class)->createSeats($concert);
+
+        return $this->serializer->prepareResponse($concert, "concert_details");
+        //return $this->json($json, $status = 200, $headers = [], $context = []);
+    }
+
+
+    /**
+     * @Route ("/concert_event", name="createConcertAndEvent", methods={"POST"})
+     * @param Request $request
+     * @param EventManager $eventManager
      * @param SalleManager $salleManager
      * @return Response
      */
-    public function createConcert(Request $request, EventManager $eventManager, SalleManager $salleManager){
+    public function createConcertAndEvent(Request $request, EventManager $eventManager, SalleManager $salleManager){
         $json = $request->getContent();
 
         $data = json_decode($request->getContent(), true);
