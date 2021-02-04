@@ -119,10 +119,22 @@ class User implements UserInterface
      */
     private $birthDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="userLiked")
+     */
+    private $likedArticles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="userShared")
+     */
+    private $sharedArticles;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->likedArticles = new ArrayCollection();
+        $this->sharedArticles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -391,6 +403,60 @@ class User implements UserInterface
     public function setBirthDate(\DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getLikedArticles(): Collection
+    {
+        return $this->likedArticles;
+    }
+
+    public function addLikedArticle(Article $likedArticle): self
+    {
+        if (!$this->likedArticles->contains($likedArticle)) {
+            $this->likedArticles[] = $likedArticle;
+            $likedArticle->addUserLiked($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedArticle(Article $likedArticle): self
+    {
+        if ($this->likedArticles->removeElement($likedArticle)) {
+            $likedArticle->removeUserLiked($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getSharedArticles(): Collection
+    {
+        return $this->sharedArticles;
+    }
+
+    public function addSharedArticle(Article $sharedArticle): self
+    {
+        if (!$this->sharedArticles->contains($sharedArticle)) {
+            $this->sharedArticles[] = $sharedArticle;
+            $sharedArticle->addUserShared($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSharedArticle(Article $sharedArticle): self
+    {
+        if ($this->sharedArticles->removeElement($sharedArticle)) {
+            $sharedArticle->removeUserShared($this);
+        }
 
         return $this;
     }
