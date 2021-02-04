@@ -64,7 +64,7 @@ class ConcertController extends AbstractController
 
         $event = $eventManager->save($event);
 
-        $concerts = $event->getConcerts();
+        $concerts = $event->getConcerts()->toArray();
 
         foreach ($concerts as $concert) {
             $this->em->getRepository(Concert::class)->createSeats($concert);

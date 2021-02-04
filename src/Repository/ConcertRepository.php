@@ -44,6 +44,7 @@ class ConcertRepository extends ServiceEntityRepository
                     $seat->setPrice($priceMax);
                     try {
                         $this->_em->persist($seat);
+                        $this->_em->flush();
                     } catch (ORMException $e) {
                         dd($e);
                     }
