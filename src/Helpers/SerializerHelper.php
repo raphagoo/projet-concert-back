@@ -41,9 +41,10 @@ class SerializerHelper
      * @param $jsonObject
      * @param $objectClass
      * @param $objectToPopulate
+     * @param null $groups
      * @return array|object
      */
-    public function deserializeRequest($jsonObject, $objectClass, $objectToPopulate){
-        return $this->serializer->deserialize($jsonObject, $objectClass, 'json', ['object_to_populate' => $objectToPopulate, 'deep_object_to_populate' => true]);
+    public function deserializeRequest($jsonObject, $objectClass, $objectToPopulate, $groups = null){
+        return $this->serializer->deserialize($jsonObject, $objectClass, 'json', ['object_to_populate' => $objectToPopulate, 'deep_object_to_populate' => true, 'groups' => $groups]);
     }
 }

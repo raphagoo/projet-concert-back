@@ -43,13 +43,13 @@ class EventManager
 
     /**
      * @param Event $event
-     * @return int|null
+     * @return Event
      */
     public function save(Event $event){
 
         $this->em->persist($event);
         $this->em->flush();
-        return $event->getId();
+        return $event;
     }
 
     /**

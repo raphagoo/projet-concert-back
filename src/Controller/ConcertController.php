@@ -10,6 +10,7 @@ use App\BL\EventManager;
 use App\BL\SalleManager;
 use App\BL\SeatManager;
 use App\Entity\Concert;
+use App\Entity\Event;
 use App\Entity\Salle;
 use App\Entity\Seat;
 use App\Helpers\SerializerHelper;
@@ -46,26 +47,30 @@ class ConcertController extends AbstractController
      * @Route ("/concert", name="createConcert", methods={"POST"})
      * @param Request $request
      * @param EventManager $eventManager
-     * @param ConcertManager $concertManager
-     * @param SeatManager $seatManager
+     * @param SalleManager $salleManager
      * @return Response
      */
-    public function createConcert(Request $request, EventManager $eventManager, ConcertManager $concertManager, SeatManager $seatManager){
+    public function createConcert(Request $request, EventManager $eventManager, SalleManager $salleManager){
         $json = $request->getContent();
 
         $data = json_decode($request->getContent(), true);
+        $idSalle = $data['salle']['id'];
 
-        $idEvent = $data['eventId'];
+        $salle = $salleManager->findSalleById($idSalle);
 
-        $concert = new Concert();
-        $concert = $this->serializer->deserializeRequest($json,Concert::class, $concert);
-        $concert->setEvent($eventManager->findEventById($idEvent));
+        $event = new Event();
+        $event = $this->serializer->deserializeRequest($json, Event::class, $event, 'event_details');
+        $event->setSalle($salle);
 
-        $concert = $concertManager->save($concert);
+        $event = $eventManager->save($event);
 
-        $this->em->getRepository(Concert::class)->createSeats($concert);
+        $concerts = $event->getConcerts();
 
-        return $this->serializer->prepareResponse($concert, "concert_details");
+        foreach ($concerts as $concert) {
+            $this->em->getRepository(Concert::class)->createSeats($concert);
+        }
+
+        return $this->serializer->prepareResponse($event, "event_details");
         //return $this->json($json, $status = 200, $headers = [], $context = []);
     }
 

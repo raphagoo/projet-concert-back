@@ -83,7 +83,7 @@ class Event
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Concert::class, mappedBy="event")
+     * @ORM\OneToMany(targetEntity=Concert::class, mappedBy="event", cascade={"persist"})
      * @Groups({"event_details","event_search"})
      */
     private $concerts;
