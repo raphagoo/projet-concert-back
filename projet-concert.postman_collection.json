@@ -137,6 +137,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create event & concert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:8000/concert",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"concert"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
