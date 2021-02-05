@@ -12,6 +12,10 @@ $ composer install
 ```
 
 ```bash
+$ php bin/console doctrine:database:create
+```
+
+```bash
 $ php bin/console make:migration
 ```
 
