@@ -89,11 +89,11 @@ class ArticleController
     public function listArticles(ArticleManager $articleManager){
         $articles = $articleManager->getArticles();
 
-        return $this->serializer->prepareResponse($articles, 'article');
+        return $this->serializer->prepareResponse($articles, 'article_list');
     }
 
     /**
-     * @Route("/article/{idArticle}", name="getArticle", methods={"GET"})
+     * @Route("/articles/{idArticle}", name="getArticle", methods={"GET"})
      * @param $idArticle
      * @param ArticleManager $articleManager
      * @return Response
@@ -106,5 +106,67 @@ class ArticleController
         }
 
         return $this->serializer->prepareResponse($article, "article");
+    }
+
+    /**
+     * @Route("/articles/{idArticle}/like", name="likeArticle", methods={"POST"})
+     * @param $idArticle
+     * @param ArticleManager $articleManager
+     * @return Response
+     */
+    public function likeArticle($idArticle, ArticleManager $articleManager){
+        $article = $articleManager->findArticleById($idArticle);
+
+        if(!$article) {
+            return (new JsonResponse('article not found'))->setStatusCode(404);
+        }
+        $user = $this->security->getUser();
+        $user->addLikedArticle($article);
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $this->serializer->prepareResponse($article, "article");
+    }
+
+    /**
+     * @Route("/articles/{idArticle}/share", name="shareArticle", methods={"POST"})
+     * @param $idArticle
+     * @param ArticleManager $articleManager
+     * @return Response
+     */
+    public function shareArticle($idArticle, ArticleManager $articleManager){
+        $article = $articleManager->findArticleById($idArticle);
+
+        if(!$article) {
+            return (new JsonResponse('article not found'))->setStatusCode(404);
+        }
+        $user = $this->security->getUser();
+        $user->addSharedArticle($article);
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $this->serializer->prepareResponse($article, "article");
+    }
+
+    /**
+     * @Route("/articles/like", name="getLikedArticles", methods={"GET"})
+     * @return Response
+     */
+    public function getUserLikedArticles(){
+        $user = $this->security->getUser();
+        $articles = $user->getLikedArticles();
+
+        return $this->serializer->prepareResponse($articles, "article_list");
+    }
+
+    /**
+     * @Route("/articles/share", name="getSharedArticles", methods={"GET"})
+     * @return Response
+     */
+    public function getUserSharedArticles(){
+        $user = $this->security->getUser();
+        $articles = $user->getSharedArticles();
+
+        return $this->serializer->prepareResponse($articles, "article_list");
     }
 }
