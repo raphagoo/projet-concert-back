@@ -17,39 +17,39 @@ class Article
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $text;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $author;
 
     /**
      * @ORM\ManyToOne(targetEntity=ArticleCategory::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"article", "search"})
+     * @Groups({"article", "article_list", "search"})
      */
     private $category;
 
@@ -160,6 +160,10 @@ class Article
         return $this;
     }
 
+    /**
+     * @return int
+     * @Groups("article_list")
+     */
     public function getUserLikedCount(): int
     {
         return $this->userLiked->count();
@@ -189,6 +193,10 @@ class Article
         return $this;
     }
 
+    /**
+     * @return int
+     * @Groups("article_list")
+     */
     public function getUserSharedCount(): int
     {
         return $this->userShared->count();
