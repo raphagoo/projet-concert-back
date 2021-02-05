@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class ConcertController extends AbstractController
 {
@@ -45,6 +46,7 @@ class ConcertController extends AbstractController
 
     /**
      * @Route ("/concert", name="createConcert", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param Request $request
      * @param EventManager $eventManager
      * @param ConcertManager $concertManager
@@ -73,6 +75,7 @@ class ConcertController extends AbstractController
 
     /**
      * @Route ("/concert_event", name="createConcertAndEvent", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param Request $request
      * @param EventManager $eventManager
      * @param SalleManager $salleManager

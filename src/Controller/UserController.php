@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class UserController
 {
@@ -129,6 +130,7 @@ class UserController
 
     /**
      * @Route("/user", name="updateUser", methods={"PATCH"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @return Response
      */
@@ -148,6 +150,7 @@ class UserController
 
     /**
      * @Route("/user", name="getUserData", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @return Response
      */
     public function getUser()
@@ -155,20 +158,5 @@ class UserController
         $user = $this->security->getUser();
 
         return $this->serializer->prepareResponse($user, 'user_detail');
-    }
-
-
-    /**
-     * @Route("/test", name="test")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function test(Request $request)
-    {
-        $user = $this->security->getUser();
-        $data = array("username" => $user->getUsername(), "email" => $user->getEmail());
-
-        return new JsonResponse($data, 200);
-
     }
 }

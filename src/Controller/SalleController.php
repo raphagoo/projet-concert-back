@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 use Psr\Log\LoggerInterface;
 
@@ -32,6 +33,7 @@ class SalleController extends AbstractController
 
     /**
      * @Route ("/salle", name="createSalle", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param Request $request
      * @param SalleManager $salleManager
      * @return Response

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class ParkingController extends AbstractController
 {
@@ -36,6 +37,7 @@ class ParkingController extends AbstractController
 
     /**
      * @Route("/parking/{idTicket}", name="getParkingReservation", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param $idTicket
      * @param TicketManager $ticketManager
      * @return Response
@@ -52,6 +54,7 @@ class ParkingController extends AbstractController
 
     /**
      * @Route("/parking/{idTicket}", name="createParkingReservation", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @param $idTicket
      * @param TicketManager $ticketManager
@@ -90,6 +93,7 @@ class ParkingController extends AbstractController
 
     /**
      * @Route("/parking/{idTicket}", name="updateParkingReservation", methods={"PUT"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @param $idTicket
      * @param TicketManager $ticketManager

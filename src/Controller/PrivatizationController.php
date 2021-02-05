@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class PrivatizationController extends AbstractController
 {
@@ -35,6 +36,7 @@ class PrivatizationController extends AbstractController
 
     /**
      * @Route("/privatization", name="createPrivatization", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @param PrivatizationManager $privatizationManager
      * @return Response
@@ -51,6 +53,7 @@ class PrivatizationController extends AbstractController
 
     /**
      * @Route("/privatization/{idPrivatization}", name="getPrivatization", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param $idPrivatization
      * @param PrivatizationManager $privatizationManager
      * @return Response
@@ -63,6 +66,7 @@ class PrivatizationController extends AbstractController
 
     /**
      * @Route("/privatization", name="listPrivatization", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param PrivatizationManager $privatizationManager
      * @return Response
      */

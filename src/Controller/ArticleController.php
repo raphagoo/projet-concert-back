@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class ArticleController
 {
@@ -44,6 +45,7 @@ class ArticleController
 
     /**
      * @Route ("/articles", name="createArticle", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @param ArticleCategoryManager $categoryManager
      * @return Response
@@ -110,6 +112,7 @@ class ArticleController
 
     /**
      * @Route("/articles/{idArticle}/like", name="likeArticle", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param $idArticle
      * @param ArticleManager $articleManager
      * @return Response
@@ -130,6 +133,7 @@ class ArticleController
 
     /**
      * @Route("/articles/{idArticle}/share", name="shareArticle", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param $idArticle
      * @param ArticleManager $articleManager
      * @return Response
@@ -150,6 +154,7 @@ class ArticleController
 
     /**
      * @Route("/articles/like", name="getLikedArticles", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @return Response
      */
     public function getUserLikedArticles(){
@@ -161,6 +166,7 @@ class ArticleController
 
     /**
      * @Route("/articles/share", name="getSharedArticles", methods={"GET"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @return Response
      */
     public function getUserSharedArticles(){

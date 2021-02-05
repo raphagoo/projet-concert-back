@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class ReservationController
 {
@@ -29,6 +30,7 @@ class ReservationController
     }
     /**
      * @Route("/reservation/{idReservation}", name="getReservation")
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param $idReservation
      * @param ReservationManager $reservationManager
      * @return Response

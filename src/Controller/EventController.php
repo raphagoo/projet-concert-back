@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class EventController extends AbstractController
 {
@@ -36,6 +37,7 @@ class EventController extends AbstractController
 
     /**
      * @Route ("/event", name="createEvent", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN')")
      * @param Request $request
      * @param EventManager $eventManager
      * @param SalleManager $salleManager

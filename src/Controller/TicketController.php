@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secu;
 
 class TicketController extends AbstractController
 {
@@ -42,6 +43,7 @@ class TicketController extends AbstractController
 
     /**
      * @Route ("/ticket", name="createTicket", methods={"POST"})
+     * @Secu("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param UserManager $userManager
