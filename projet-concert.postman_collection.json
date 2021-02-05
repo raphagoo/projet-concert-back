@@ -137,6 +137,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create event & concert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MTI0NTQ3MTMsImV4cCI6MTYxMjQ1ODMxMywicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluLmFkbWluQGZpeHR1cmUuZnIifQ.awH-QH71MtcgiSwYl6kIj0WYLQ1KZ0DQ4sEhT28qthIHOdVbCicU7_9-Q2l7fkPQR7BW3iwYqJBrOb-kdTCZrlq28IEaTy1JrpP57_RUCN0U9_V2zFJZvOOjXVWg78bdh2p93RQM08iHdSBF3_rH7qg1Xy1mx1OO-thY86oX2waRALt_ekD-0JLfkh4uDh57dHSJtKsoTDLPBwbsDG6GQ3fpIF1MnYze42fhoC4JDIJTZb8q3SD7XisshAZ5E6rEOXkXhjtQKXDE_BeIBnceLNZ6nH8tYd69OMBIZwvg7tELjHLLuJbqMHqifpA6qAsEnNfCw6SU7IHXeAPcCg5SG2FVY-FhtdxYxHE-aU6WSoVx7HrK6d3yYy5doygOkyIm2T1p8xSQ-qkL2qdHUdgCuyXpGy1k2EAELO476yvGLJzPeaYJO8vMgsjfWPtHfm3cz7ghZ7W82RbsGBuMuDxR8ODCV6OA51OgBE_M6NwkLJqfmWQTIfR5ZoZQ7nl2lmkdNJKpbO_vFXFjo825uW0xTuZIV4fzeOEKbOvcZU43-9eYfk6IEviw1JXF8UZqhjIq14YyOxVr5mZYtezwC7vs_FVxf6_W4xdXtXvePL3bhHw8b1yG_0Q_HK2ygM3xCa5F2Fw5S9VRif0R6bORgD828fHvsGCQ-ir7irJsEgMQN8Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"salle\":\r\n{\r\n    \"id\": 1\r\n},\r\n\"name\":\"sgz\",\r\n\"artistName\":\"ggg\",\r\n\"parking\":true,\r\n\"restaurant\":true,\r\n\"concerts\":[\r\n    {\r\n    \"artistDescription\":\"description de l'artiste\",\r\n    \"time\":\"1970-01-01T16:25:12+00:00\",\r\n    \"date\":\"2021-02-08T00:00:00+00:00\",\r\n    \"openingTime\":\"1970-01-01T15:25:12+00:00\",\r\n    \"priceMax\":150,\r\n    \"percentage\":0.8,\r\n    \"categoryNumber\":3\r\n    },\r\n    {\r\n    \"artistDescription\":\"description de l'artiste\",\r\n    \"time\":\"1970-01-01T16:25:12+00:00\",\r\n    \"date\":\"2021-02-08T00:00:00+00:00\",\r\n    \"openingTime\":\"1970-01-01T15:25:12+00:00\",\r\n    \"priceMax\":150,\r\n    \"percentage\":0.8,\r\n    \"categoryNumber\":3\r\n    }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/concert_event",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"concert_event"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

@@ -60,7 +60,7 @@ class Concert
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"concert_details", "concert_list"})
+     * @Groups({"concert_details", "concert_list", "event_details"})
      */
     private $artistDescription;
 
