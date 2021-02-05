@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -47,28 +48,22 @@ class UserController
         $this->serializer = $serializer;
     }
 
-    /**
-     * @Route("/register", name="createUser")
-     * @param Request $request
-     * @param UserManager $manager
-     * @return JsonResponse
-     */
-    public function register(Request $request, UserManager $manager)
-    {
+    public function getData($data){
+        $result = [];
+
         try{
-            $data = json_decode($request->getContent(), true);
-            $email = $data['email'];
-            $password = $data['password'];
-            $firstName = $data['firstName'];
-            $lastName = $data['lastName'];
+            $result['email'] = $data['email'];
+            $result['password'] = $data['password'];
+            $result['firstName'] = $data['firstName'];
+            $result['lastName'] = $data['lastName'];
             $gender = $data['gender'];
-            $address = $data['address'];
-            $residence = (isset($data['residence'])) ? $data['residence'] : null;
-            $locality = (isset($data['locality'])) ? $data['locality'] : null;
-            $zipCode = $data['zipCode'];
-            $city = $data['city'];
-            $country = $data['country'];
-            $phoneNumber = $data['phoneNumber'];
+            $result['address'] = $data['address'];
+            $result['residence'] = (isset($data['residence'])) ? $data['residence'] : null;
+            $result['locality'] = (isset($data['locality'])) ? $data['locality'] : null;
+            $result['zipCode'] = $data['zipCode'];
+            $result['city'] = $data['city'];
+            $result['country'] = $data['country'];
+            $result['phoneNumber'] = $data['phoneNumber'];
             $birthDateStr = $data['birthDate'];
         } catch (ErrorException $e){
             $message = "A required field is missing (required : email, password, firstName, lastName, gender, address, 
@@ -80,36 +75,88 @@ class UserController
             $message = "The field gender is incorrect (should be either F or M)";
             throw new BadRequestHttpException($message);
         }
+        $result['gender'] = $gender;
 
         if(($birthDate = DateTime::createFromFormat('Y-m-d', $birthDateStr)) === false){
             $message = "The birthDate format is incorrect (format: YYYY-mm-dd)";
             throw new BadRequestHttpException($message);
         }
+        $result['birthDate'] = $birthDate;
 
-        $user = new User();
-        $user->setEmail($email);
-        $user->setFirstName($firstName);
-        $user->setLastName($firstName);
-        $user->setLastName($lastName);
-        $user->setGender($gender);
-        $user->setAddress($address);
-        if($residence){$user->setResidence($residence);}
-        if($locality){$user->setLocality($locality);}
-        $user->setZipCode($zipCode);
-        $user->setCity($city);
-        $user->setCountry($country);
-        $user->setPhoneNumber($phoneNumber);
-        $user->setBirthDate($birthDate);
+        return $result;
+    }
 
-        $user->setPassword($password);
+    public function setUserData($user, $data){
+        $user->setEmail($data['email']);
+        $user->setFirstName($data['firstName']);
+        $user->setLastName($data['lastName']);
+        $user->setLastName($data['lastName']);
+        $user->setGender($data['gender']);
+        $user->setAddress($data['address']);
+        if($data['residence']){$user->setResidence($data['residence']);}
+        if($data['locality']){$user->setLocality($data['locality']);}
+        $user->setZipCode($data['zipCode']);
+        $user->setCity($data['city']);
+        $user->setCountry($data['country']);
+        $user->setPhoneNumber($data['phoneNumber']);
+        $user->setBirthDate($data['birthDate']);
+
+        $user->setPassword($data['password']);
         $password = $this->encoder->encodePassword($user, $user->getPassword());
         $user->setPassword($password);
 
-        $this->em->persist($user);
+        return $user;
+    }
+
+    /**
+     * @Route("/register", name="createUser")
+     * @param Request $request
+     * @return Response
+     */
+    public function register(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $userData = $this->getData($data);
+
+        $user = new User();
+        $createdUser = $this->setUserData($user, $userData);
+
+        $this->em->persist($createdUser);
         $this->em->flush();
+
+        return $this->serializer->prepareResponse($createdUser, 'user_detail');
+    }
+
+    /**
+     * @Route("/user", name="updateUser", methods={"PATCH"})
+     * @param Request $request
+     * @return Response
+     */
+    public function updateUser(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $userData = $this->getData($data);
+
+        $user = $this->security->getUser();
+        $updatedUser = $this->setUserData($user, $userData);
+
+        $this->em->persist($updatedUser);
+        $this->em->flush();
+
+        return $this->serializer->prepareResponse($updatedUser, 'user_detail');
+    }
+
+    /**
+     * @Route("/user", name="getUserData", methods={"GET"})
+     * @return Response
+     */
+    public function getUser()
+    {
+        $user = $this->security->getUser();
 
         return $this->serializer->prepareResponse($user, 'user_detail');
     }
+
 
     /**
      * @Route("/test", name="test")
