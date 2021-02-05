@@ -37,15 +37,19 @@ class EventManager
         return $this->em->getRepository(Event::class)->find($idEvent);
     }
 
+    public function getLatestEvent(){
+        return $this->em->getRepository(Event::class)->findBy(array(),array('id'=>'DESC'),1,0);
+    }
+
     /**
      * @param Event $event
-     * @return int|null
+     * @return Event
      */
     public function save(Event $event){
 
         $this->em->persist($event);
         $this->em->flush();
-        return $event->getId();
+        return $event;
     }
 
     /**

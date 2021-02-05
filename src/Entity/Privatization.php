@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PrivatizationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PrivatizationRepository::class)
@@ -14,51 +15,61 @@ class Privatization
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("privatization_details")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("privatization_details")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("privatization_details")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("privatization_details")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("privatization_details")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("privatization_details")
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups("privatization_details")
      */
     private $time;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("privatization_details")
      */
     private $numberPerson;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("privatization_details")
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("privatization_details")
      */
     private $budget;
 

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Concert;
+use App\Entity\Seat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,41 @@ class ConcertRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Concert::class);
+    }
+
+    public function createSeats(Concert $concert){
+        $priceMax = $concert->getPriceMax();
+        $percentage = $concert->getPercentage();
+
+        $capacity = $concert->getEvent()->getSalle()->getCapacity();
+
+        $seatsByCategory = floor($capacity / $concert->getCategoryNumber());
+        $seatsByLine = floor($seatsByCategory / 3);
+
+        $category = 1;
+        for($i = 0; $i < $concert->getCategoryNumber(); $i++) {
+            $lineIndex = 0;
+            for ($j = 0; $j + $seatsByLine < $seatsByCategory; $j = $j + $seatsByLine) {
+                $line = ["A", "B", "C", "D", "E"];
+                for ($k = 1; $k < $seatsByLine + 1; $k++) {
+                    $seat = new Seat();
+                    $seat->setConcert($concert);
+                    $seat->setCategory($category);
+                    $seat->setLetter($line[$lineIndex]);
+                    $seat->setNumber($k);
+                    $seat->setPrice($priceMax);
+                    try {
+                        $this->_em->persist($seat);
+                        $this->_em->flush();
+                    } catch (ORMException $e) {
+                        dd($e);
+                    }
+                }
+                $priceMax = round($priceMax * (100 - $percentage) / 100);
+                $lineIndex++;
+            }
+            $category++;
+        }
     }
 
     // /**

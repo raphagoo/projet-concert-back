@@ -10,6 +10,7 @@ use App\BL\EventManager;
 use App\BL\SalleManager;
 use App\BL\SeatManager;
 use App\Entity\Concert;
+use App\Entity\Event;
 use App\Entity\Salle;
 use App\Entity\Seat;
 use App\Helpers\SerializerHelper;
@@ -29,10 +30,16 @@ class ConcertController extends AbstractController
      */
     private LoggerInterface $logger;
     private SerializerHelper $serializer;
+    /**
+     * @var EntityManagerInterface
+     */
+    private EntityManagerInterface $em;
+
     public function __construct(EntityManagerInterface $em, LoggerInterface $logger, SerializerHelper $serializer)
     {
         $this->logger = $logger;
         $this->serializer = $serializer;
+        $this->em = $em;
 
     }
 
@@ -57,34 +64,41 @@ class ConcertController extends AbstractController
 
         $concert = $concertManager->save($concert);
 
-        $priceMax = $concert->getPriceMax();
-        $percentage = $concert->getPercentage();
+        $this->em->getRepository(Concert::class)->createSeats($concert);
 
-        $capacity = $concert->getEvent()->getSalle()->getCapacity();
-
-        $seatsByCategory = floor($capacity / $concert->getCategoryNumber());
-        $seatsByLine = floor($seatsByCategory / 3);
-
-        $category = 1;
-        for($i = 0; $i < $concert->getCategoryNumber(); $i++) {
-            $lineIndex = 0;
-            for ($j = 0; $j + $seatsByLine < $seatsByCategory; $j = $j + $seatsByLine) {
-                $line = ["A", "B", "C", "D", "E"];
-                for ($k = 1; $k < $seatsByLine + 1; $k++) {
-                    $seat = new Seat();
-                    $seat->setConcert($concert);
-                    $seat->setCategory($category);
-                    $seat->setLetter($line[$lineIndex]);
-                    $seat->setNumber($k);
-                    $seat->setPrice($priceMax);
-                    $seatManager->save($seat);
-                }
-                $priceMax = round($priceMax * (100 - $percentage) / 100);
-                $lineIndex++;
-            }
-            $category++;
-        }
         return $this->serializer->prepareResponse($concert, "concert_details");
+        //return $this->json($json, $status = 200, $headers = [], $context = []);
+    }
+
+
+    /**
+     * @Route ("/concert_event", name="createConcertAndEvent", methods={"POST"})
+     * @param Request $request
+     * @param EventManager $eventManager
+     * @param SalleManager $salleManager
+     * @return Response
+     */
+    public function createConcertAndEvent(Request $request, EventManager $eventManager, SalleManager $salleManager){
+        $json = $request->getContent();
+
+        $data = json_decode($request->getContent(), true);
+        $idSalle = $data['salle']['id'];
+
+        $salle = $salleManager->findSalleById($idSalle);
+
+        $event = new Event();
+        $event = $this->serializer->deserializeRequest($json, Event::class, $event, 'event_details');
+        $event->setSalle($salle);
+
+        $event = $eventManager->save($event);
+
+        $concerts = $event->getConcerts()->toArray();
+
+        foreach ($concerts as $concert) {
+            $this->em->getRepository(Concert::class)->createSeats($concert);
+        }
+
+        return $this->serializer->prepareResponse($event, "event_details");
         //return $this->json($json, $status = 200, $headers = [], $context = []);
     }
 

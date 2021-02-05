@@ -51,6 +51,7 @@ class UserController
      * @Route("/register", name="createUser")
      * @param Request $request
      * @param UserManager $manager
+     * @return JsonResponse
      */
     public function register(Request $request, UserManager $manager)
     {
@@ -80,8 +81,8 @@ class UserController
             throw new BadRequestHttpException($message);
         }
 
-        if(($birthDate = DateTime::createFromFormat('d/m/Y', $birthDateStr)) === false){
-            $message = "The birthDate format is incorrect (format: dd/mm/YYYY)";
+        if(($birthDate = DateTime::createFromFormat('Y-m-d', $birthDateStr)) === false){
+            $message = "The birthDate format is incorrect (format: YYYY-mm-dd)";
             throw new BadRequestHttpException($message);
         }
 
@@ -113,6 +114,7 @@ class UserController
     /**
      * @Route("/test", name="test")
      * @param Request $request
+     * @return JsonResponse
      */
     public function test(Request $request)
     {

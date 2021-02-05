@@ -17,7 +17,7 @@ class Salle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"event_details", "salle_details", "salle_list", "restaurantTicket_details", "event_search"})
+     * @Groups({"event_details", "salle_details", "salle_list", "restaurantTicket_details", "event_search", "concert_details", "concert_list"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Salle
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"salle_details", "salle_list", "event_search"})
+     * @Groups({"salle_details", "salle_list", "event_search", "event_details", "concert_details", "concert_list"})
      */
     private $city;
 
@@ -41,7 +41,7 @@ class Salle
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"salle_details", "salle_list"})
+     * @Groups({"salle_details", "salle_list", "event_details", "concert_details", "concert_list"})
      */
     private $name;
 

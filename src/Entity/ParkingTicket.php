@@ -31,6 +31,11 @@ class ParkingTicket
      */
     private $ticket;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberPlace;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,6 +61,18 @@ class ParkingTicket
     public function setTicket(Ticket $ticket): self
     {
         $this->ticket = $ticket;
+
+        return $this;
+    }
+
+    public function getNumberPlace(): ?int
+    {
+        return $this->numberPlace;
+    }
+
+    public function setNumberPlace(int $numberPlace): self
+    {
+        $this->numberPlace = $numberPlace;
 
         return $this;
     }
