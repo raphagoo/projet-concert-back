@@ -147,4 +147,26 @@ class ArticleController
 
         return $this->serializer->prepareResponse($article, "article");
     }
+
+    /**
+     * @Route("/articles/like", name="getLikedArticles", methods={"GET"})
+     * @return Response
+     */
+    public function getUserLikedArticles(){
+        $user = $this->security->getUser();
+        $articles = $user->getLikedArticles();
+
+        return $this->serializer->prepareResponse($articles, "article_list");
+    }
+
+    /**
+     * @Route("/articles/share", name="getSharedArticles", methods={"GET"})
+     * @return Response
+     */
+    public function getUserSharedArticles(){
+        $user = $this->security->getUser();
+        $articles = $user->getSharedArticles();
+
+        return $this->serializer->prepareResponse($articles, "article_list");
+    }
 }
