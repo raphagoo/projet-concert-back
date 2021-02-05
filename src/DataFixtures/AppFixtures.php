@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Article;
+use App\Entity\ArticleCategory;
 use App\Entity\Category;
 use App\Entity\Concert;
 use App\Entity\Event;
@@ -36,6 +37,14 @@ class AppFixtures extends Fixture
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
+    }
+
+    public function createArticleCategory($name, $manager){
+        $category = new ArticleCategory();
+        $category->setName($name);
+        $manager->persist($category);
+        $manager->flush();
+        return $category;
     }
 
     /**
@@ -139,6 +148,14 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
+        // create a few article category
+        $this->createArticleCategory("concert", $manager);
+        $this->createArticleCategory("events", $manager);
+        $this->createArticleCategory("information", $manager);
+        $this->createArticleCategory("advertising", $manager);
+        $categoryList = $manager->getRepository(ArticleCategory::class)->findAll();
+        $j = 0;
+
         // create 20 articles! Bam!
         $nbExisting = count($manager->getRepository(Article::class)->findAll());
 
@@ -153,6 +170,11 @@ class AppFixtures extends Fixture
             }
             $article->setImage('fixtureUrl');
             $article->setText('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ornare dui ultricies orci maximus ultricies. Vestibulum sit amet maximus neque. Nam magna eros, pretium vitae sapien et, dignissim malesuada lorem. Aenean est purus, varius vitae aliquet eget, pretium et odio. Sed bibendum maximus molestie. In ac enim vel sapien ultricies eleifend. In rutrum luctus mauris tincidunt consequat. Nullam elementum lobortis est. Curabitur pharetra nibh augue, rutrum fringilla tortor consequat at. Aenean dictum libero nec sapien imperdiet, at bibendum mi dictum. Nunc ornare ac enim euismod efficitur. Sed et arcu massa. Mauris aliquet nec tellus eu pulvinar.');
+
+            if($j >= count($categoryList)){$j = 0;}
+            $article->setCategory($categoryList[$j]);
+            $j++;
+
             $manager->persist($article);
         }
 
