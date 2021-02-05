@@ -38,7 +38,7 @@ class EventManager
     }
 
     public function getLatestEvent(){
-        return $this->em->getRepository(Event::class)->findBy(array(),array('id'=>'DESC'),1,0);
+        return $this->em->getRepository(Event::class)->findBy(array(),array('id'=>'DESC'),8,0);
     }
 
     /**
