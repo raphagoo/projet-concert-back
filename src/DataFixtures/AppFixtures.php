@@ -96,14 +96,20 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
-        $categoryExists = $manager->getRepository(Category::class)->findOneBy(['name' => 'Rock']);
-        if(!$categoryExists) {
-            //create category
-            $category = new Category();
-            $category->setName('Rock');
-            $manager->persist($category);
-            $manager->flush();
+        $infoCategories = ['Pop', 'Rock', 'Classique'];
+
+        foreach ($infoCategories as $infoCategory) {
+            $categoryExists = $manager->getRepository(Category::class)->findOneBy(['name' => $infoCategory]);
+            if (!$categoryExists) {
+                //create category
+                $category = new Category();
+                $category->setName($infoCategory);
+                $manager->persist($category);
+                $manager->flush();
+            }
         }
+
+        $categories =  $manager->getRepository(Category::class)->findAll();
 
         $infoSalles = [['name' => 'Aix-en-Provence', 'capacity' => 150], ['name' => 'Bourges', 'capacity' => 100], ['name' => 'Cannes', 'capacity' => 200], ['name' => 'Dunkerque', 'capacity' => 100], ['name' => 'Echirolles', 'capacity' => 150]];
 
@@ -162,12 +168,8 @@ class AppFixtures extends Fixture
                 $event->setArtistDescription('Lorem Ipsum');
                 $event->setParking(true);
                 $event->setRestaurant(true);
-                if($categoryExists){
-                    $event->addCategory($categoryExists);
-                }
-                else {
-                    $event->addCategory($category);
-                }
+                $value = array_rand($categories);
+                $event->addCategory($categories[$value]);
 
                 $manager->persist($event);
 
