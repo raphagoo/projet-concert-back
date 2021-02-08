@@ -12,6 +12,7 @@ use App\Entity\Event;
 use App\Entity\Parking;
 use App\Entity\Restaurant;
 use App\Entity\Salle;
+use App\Entity\TicketObtaining;
 use App\Entity\User;
 use App\Repository\ConcertRepository;
 use DateTime;
@@ -105,6 +106,19 @@ class AppFixtures extends Fixture
                 $category = new Category();
                 $category->setName($infoCategory);
                 $manager->persist($category);
+                $manager->flush();
+            }
+        }
+
+        $obtainingMethods = [['name'=>'Guichet', 'price'=> 2], ['name' => 'E-ticket', 'price' => 0], ['name' => 'Envoi postal', 'price' => 8]];
+        foreach ($obtainingMethods as $obtainingMethod) {
+            $obtainingMethodExists = $manager->getRepository(TicketObtaining::class)->findOneBy(['name' => $obtainingMethod['name']]);
+            if (!$obtainingMethodExists) {
+                //create obtaining method
+                $ticketObtaining = new TicketObtaining();
+                $ticketObtaining->setName($obtainingMethod['name']);
+                $ticketObtaining->setPrice($obtainingMethod['price']);
+                $manager->persist($ticketObtaining);
                 $manager->flush();
             }
         }

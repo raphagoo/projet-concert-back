@@ -18,19 +18,19 @@ class TicketObtaining
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups ("ticket_type")
+     * @Groups ({"ticket_type", "ticketObtainingMethod_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups ("ticket_type")
+     * @Groups ({"ticket_type", "ticketObtainingMethod_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups ("ticket_type")
+     * @Groups ({"ticket_type", "ticketObtainingMethod_list"})
      */
     private $price;
 

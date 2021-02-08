@@ -25,7 +25,8 @@ class TicketObtainingManager
     /**
      * @return TicketObtaining[]
      */
-    public function getTicketObtainings(){
+    public function getTicketObtainings(): array
+    {
         return $this->em->getRepository(TicketObtaining::class)->findAll();
     }
 
@@ -33,7 +34,8 @@ class TicketObtainingManager
      * @param $idTicketObtaining
      * @return TicketObtaining|null
      */
-    public function findTicketObtainingById($idTicketObtaining){
+    public function findTicketObtainingById($idTicketObtaining): ?TicketObtaining
+    {
         return $this->em->getRepository(TicketObtaining::class)->find($idTicketObtaining);
     }
 
