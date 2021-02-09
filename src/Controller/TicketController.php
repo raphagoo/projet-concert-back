@@ -59,7 +59,7 @@ class TicketController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
 
-        $user = $userManager->findUserById($data['userId']);
+        $user = $this->getUser();
 
         $reservation = new Reservation();
         $reservation->setClient($user);
@@ -86,9 +86,10 @@ class TicketController extends AbstractController
                 $restaurantTicket->setRestaurant($ticket->getSeat()->getConcert()->getEvent()->getSalle()->getRestaurant());
                 $restaurantTicketManager->save($restaurantTicket);
             }
-            if($data['parking'] === true){
+            if($data['parking']){
                 $parkingTicket = new ParkingTicket();
                 $parkingTicket->setTicket($ticket);
+                $parkingTicket->setNumberPlace($data['parkingPlaces']);
                 $parkingTicket->setParking($ticket->getSeat()->getConcert()->getEvent()->getSalle()->getParking());
                 $parkingTicketManager->save($parkingTicket);
             }
