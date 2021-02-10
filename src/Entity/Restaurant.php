@@ -17,7 +17,7 @@ class Restaurant
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"salle_details", "restaurantTicket_details"})
+     * @Groups({"salle_details", "restaurantTicket_details", "concert_details"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Restaurant
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"salle_details", "restaurantTicket_details"})
+     * @Groups({"salle_details", "restaurantTicket_details", "concert_details"})
      */
     private $price;
 

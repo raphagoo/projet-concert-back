@@ -17,7 +17,7 @@ class Parking
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "concert_details"})
      */
     private $id;
 
@@ -34,7 +34,7 @@ class Parking
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "concert_details"})
      */
     private $price;
 

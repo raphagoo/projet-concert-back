@@ -59,13 +59,13 @@ class Salle
 
     /**
      * @ORM\OneToOne(targetEntity=Parking::class, mappedBy="salle", cascade={"persist", "remove"})
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "concert_details"})
      */
     private $parking;
 
     /**
      * @ORM\OneToOne(targetEntity=Restaurant::class, mappedBy="salle", cascade={"persist", "remove"})
-     * @Groups("salle_details")
+     * @Groups({"salle_details", "concert_details"})
      */
     private $restaurant;
 
